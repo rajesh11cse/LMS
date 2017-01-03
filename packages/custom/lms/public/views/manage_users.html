@@ -1,0 +1,76 @@
+<div data-ng-controller="manage_users_Ctrl">
+   <section class="container-fluid  custom-container-fluid">
+	    <div class="row well custom-row-well">
+	      <b class=""> <a class="text-primary" href="#!/superadminlogin">Dashboard</a> / Manage Users</b>
+	      <b class="pull-right"><a href="" ng-show="!show_users_form" title="Add a user" tooltip-placement="bottom" tooltip-trigger="mouseenter"
+	      ng-click="show_users_form = true; show_users=false; users = undefined;">Add Users</a><a href="" ng-show="show_users_form" title="Cancel" tooltip-placement="bottom" tooltip-trigger="mouseenter"
+	      ng-click="show_users_form = false;show_users=true;" style="color:red;">Cancel</a> ? </b>
+	    </div>
+	    <spinner name="userSpinner" on-loaded="get_all_users(limit, currentPage)">
+	      <div data-ng-include="'/articles/views/spinner.html'" ></div> 
+	    </spinner> 
+		<div ng-show="show_users_form" class="row well custom-row-well"> 
+			<form class="col-md-12 users-form" name="userForm">
+		        <h3 class="main_title"><strong>Users Add Form</strong></h3>
+		        <p class="required">* <span>Required Fields  </span> </p>
+		        <label>Add a user here !</label>
+		        
+		        <div class="form-group">
+                    <label class="required" for="b_name"><em>*</em>User Name :</label>
+                      <input type="text" name="b_name"  placeholder="User Name" ng-model = "users.u_name" class="form-control input-sm" id="b_name" required>
+                </div>
+
+		        <div class="form-group">
+                    <label class="" for="name">Name :</label>
+                      <input type="text" name="name"  placeholder="Name" ng-model = "users.name" class="form-control input-sm" id="name" required="">
+                </div>
+
+                <div class="form-group">
+                    <label class="" for="name">Email :</label>
+                      <input type="email" name="name"  placeholder="Email Address" ng-model = "users.email" class="form-control input-sm" id="email" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="" for="name">Mobile Number :</label>
+                      <input type="text" name="mobile" ng-model = "users.mobileNo"  placeholder="Mobile Number" class="form-control input-sm" ng-pattern="/^[0-9]+$/" ng-minlength="10" ng-maxlength="10" id="Mobile" required>
+                </div>
+
+
+                <button type="submit" class="btn btn-sm btn-raised btn-success submitBtn pull-right" id="btn-register" ng-disabled="userForm.$invalid" ng-click="add_users(users)"><i class="glyphicon glyphicon-edit"></i> Submit</button>
+	            <button type="submit" href="" class="btn btn-sm btn-raised btn-danger resetBtn pull-right" ng-click="users = undefined;" id="btn-register"><i class="glyphicon glyphicon-repeat"></i> Reset</button>
+	            <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	            <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			</form>
+		</div>
+		<div ng-show="show_users" class="row well custom-row-well"> 
+			<uib-pagination total-items="total_users" ng-model="currentPage" items-per-page="limit" max-size="maxSize" class="pagination-sm" boundary-links="true" rotate="false" ng-click = "pageChanged()"></uib-pagination>
+			<p class = "pull-right" style = "padding-top:50px; padding-right:5px; color: #023A4D; font-size: 120%;">
+		       Total Users: {{total_users}}
+		    </p> 
+			<table class="zceaTable" summary="Sample Table" style="width:100%;">
+			    <thead style="border:2px solid #1E90FF;">
+				    <tr>
+				        <th scope="col">Sl. No.</th>
+		                <th scope="col">Users Name</th>
+		                <th scope="col">Name</th>
+		                <th scope="col">Email Address</th>
+		                <th scope="col">Mobile Number</th>
+		                <th scope="col">Action</th>
+				     </tr>
+				</thead>
+			    <tbody>
+			      	<tr scope="row" ng-repeat = "data in get_users">
+						<td ng-bind="$index+1+indexIncrement"></td>
+						<td ng-bind="data.usrName"></td>
+						<td ng-bind="data.name"></td>
+						<td ng-bind="data.email"></td>
+						<td ng-bind="data.contactNumber"></td>
+		                <td>
+		                	<button type="button" class="btn btn-danger btn-xs"  ng-click="remove_user(data)"  title="Delete user" ><i class="glyphicon glyphicon-trash"></i> Remove</button>
+		                </td>
+					</tr>
+			    </tbody>
+		   </table>
+		</div>
+    </section>
+</div>

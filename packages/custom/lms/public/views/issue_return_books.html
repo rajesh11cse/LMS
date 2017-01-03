@@ -1,0 +1,74 @@
+<div data-ng-controller="issue_return_books_Ctrl">
+   <section class="container-fluid  custom-container-fluid">
+	    <div class="row well custom-row-well">
+	      <b class=""> <a class="text-primary" href="#!/superadminlogin">Dashboard</a> / Issue or Return Library Books</b>
+	    </div>
+	    <spinner name="welcomePageSpinner" on-loaded="welcome_To_Dashboard()">
+          <div data-ng-include="'/articles/views/spinner.html'" ></div> 
+        </spinner>
+        <div class="row well custom-row-well">
+            <div class="form-group" style="font-family: Arial;">
+                <label class="">Search user by user name or phone number. </label>
+                 <input type="text" name="searchInput" class="form-control input-lg" type="text" ng-model = "query" ng-change="search_user(query);" placeholder = "Search" class="form-control input-lg">
+            </div>
+            <div style="color:red;" ng-show="user_found"><center>No record found for entry '<b><span ng-bind="query"></span></b>'.</center></div>
+
+            <div ng-show="showTable" style = "font-size:12px; font-family: Cambria,Georgia,serif;">
+                <table class="zceaTable" summary="Sample Table" style = "width:100%;">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">User Name</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Mobile Number</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr scope="row" ng-repeat = "data in users_list">
+                            <td >{{$index+1+indexIncrement}}</td>
+                            <td >{{data.usrName}}</td>
+                            <td >{{data.name}}</td>
+                            <td >{{data.contactNumber}}</td>
+                            <td >{{data.email}}</td>
+                            <td ng-class = "">
+                                <button title="Select user to issue/return books"" class="btn btn-info btn-sm " ng-click="select_user(data)">Select</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div ng-show="showTable">
+               <hr style="border: 1px solid grey">
+            </div>
+             <div ng-show="show_user_detail && !showTable">
+                <span class="col-md-6" style = "font-size:14px; border-right:1px solid #000;">
+                    <b> <span class="col-md-4">User Name</span><span class = "col-md-1">:</span><span class="col-md-7" style = "color:#0950AD" ng-bind = "selected_user.usrName"></span> </b><br>
+                    <b> <span class="col-md-4">Name</span><span class = "col-md-1">:</span><span class="col-md-7" style = "color:#0950AD" ng-bind = "selected_user.name"></span></b><br>
+                    <b> <span class="col-md-4">Email</span><span class = "col-md-1">:</span><span class="col-md-7" style = "color:#0950AD" ng-bind = "selected_user.email"></span></b><br>
+                    <b><span class="col-md-4">Mobile Number.</span><span class = "col-md-1">:</span><span class="col-md-7" style = "color:#0950AD" ng-bind = "selected_user.contactNumber"></span></b><br>
+                </span>
+                <div class="col-md-6">
+                	<div><b>You have issued 4 books&nbsp;&nbsp;<a href="">details</a></b></div>
+                	<br>
+	                <button ng-show="!show_book_button" title="Retun books"" class="btn btn-block btn-warning btn-sm " ng-click="show_book_button = true;">Return books</button>
+	                	<form ng-show="show_book_button" name="rerun_book_form" class="col-md-12 article-form">
+					        <div class="pull-right"><label><i>Return a book here !</i></label></div>
+					         <div class="form-group">
+			                    <label class="required" for="b_name"><em>*</em>Book Name/Book Id :</label>
+			                     <input type="text" name="return_book"  placeholder="Book Name/Book Id" ng-model = "return_book" class="form-control input-sm" required>
+			                     <span style="color:red;">Invalid  Book Name or Book id</span>
+			                </div>
+			                <button type="submit" class="btn btn-sm btn-raised btn-success submitBtn pull-right"  ng-click="add_books(books)" ng-disabled="rerun_book_form.$invalid"> Submit</button>
+				            <button type="submit" href="" class="btn btn-sm btn-raised btn-danger resetBtn pull-right" ng-click="show_book_button = flase;">Cancel</button>
+				            <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				            <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						</form>
+	                <button title="Retun books"" class="btn btn-block btn-primary btn-sm " ng-click="select_user(data)">Issue books</button>
+                </div>
+                <div class="col-md-12"><hr></div>
+            </div>
+        </div>
+    </section>
+</div>

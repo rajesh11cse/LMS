@@ -1,0 +1,214 @@
+h1 {
+	text-align: center
+}
+ul.articles li:not(:last-child) {
+	border-bottom: 1px solid #ccc
+}
+.single, h3 { font-family: Adelle, Arial, Helvetica, sans-serif; }
+
+h3.single { 
+  margin-top: -8px;
+  line-height: 45px;
+  border-bottom: 1px solid #ccc;
+  font-size: 3em;
+  color: #171717;
+  background: transparent;
+}
+
+.metadata {
+  margin-bottom: 20px;
+  font-size: 0.27em;
+  line-height: 0px;
+  margin-top: 17px;
+  color: #808080;
+  font-weight: bold;
+}
+
+.metadata a {
+  color: #FBB040;
+  font-size: 1.5em;
+}
+/*///////////////////////////////////////////////////// Show Articles in list /////////////////////////////////////////////////////*/
+/*----------Show article list , paginations show in poipup, edit, publish article in----------*/
+  .article-pagination{
+    margin-top:-25px;margin-bottom:-15px;
+  }
+  @media (max-width: 768px){
+    .outer-article-height.col-xs-12{width: 99%; margin: 4px;}
+  }
+  @media (min-width: 768px) and (max-width: 992px)  { 
+    .outer-article-height.col-sm-6{width: 48%; float:left; margin: 4px; margin-left: 10px;}
+  }
+  @media (min-width: 992px){ 
+    .outer-article-height.col-md-4{width: 32%; float:left; margin: 4px; margin-left: 10px;}
+  }
+  .outer-article-height{
+    height:215px; max-height:215px; display: inline-block;overflow: hidden;
+    
+    background-color:#fff; border-radius:1px; border: 1px solid #E0DEDE;
+  }
+  .outer-article-height:hover{
+    outline: none;
+    border-color: #9ecaed;
+    box-shadow: 0 0 10px #9ecaed;
+  }
+  .inner-article-height{
+    cursor:pointer;width:100%; height:170px; max-height:170px; display: inline-block;overflow: hidden;
+  }
+  .image-article{
+    margin-top:10px; width:130px;height:110px; float: left; margin:10px; margin-left:0px; margin-top:5px;
+  }
+  .image-article:hover {
+    width: 140px;
+    height: 120px;
+  }
+  .image-article-title{
+    color:black; text-decoration:none; font-size:13px; text-align: justify; text-justify: inter-word;
+  }
+  .image-article-characters, .image-article-time{
+    color:#6B6A6A; text-decoration:none; font-size:13px;text-align: justify; text-justify: inter-word;
+  }
+  .image-article-time span, .image-article-author span{
+    color: #424242;
+    margin-left: 4px;
+  }
+  .btn-success, .btn-error, .btn, .glyphicon{
+    border-radius:1px;
+  }
+  .popup-article-title{
+    color:black; text-decoration:none; font-size:18px;text-align: justify; text-justify: inter-word;
+  }
+  .popup-image-article-title{
+    float: left; margin-right:10px;margin-bottom:10px; width:280px;height:180px
+  }
+  .popup-article-characters, .popup-article-time{
+    color:#6B6A6A; text-decoration:none; font-size:14px;text-align: justify; text-justify: inter-word;
+  }
+  .publish-article {
+    background-color: #72A8E0; color: black; height:23px; padding: 2px; font-size: 12px; border: none; cursor: pointer;
+  }
+  .publish-article:hover, .publish-article:focus {
+    text-decoration: none; color: black; background-color: #669BD4; 
+  }
+  .publish-article option{
+    background-color: white; color:black; border-top: 1px solid #EFF0F1;
+  }
+/*  .borderCss1{
+      background-color:#fff; border-radius:1px;  border-bottom: 1px solid #E0DEDE; border-top: 1px solid #E0DEDE;
+    }
+  .borderCss2{
+    background-color:#fff; border-radius: 1px; border-top: 1px solid #E0DEDE; border-right: 1px solid #E0DEDE; border-bottom: 1px solid #E0DEDE;
+  }*/
+/*///////////////////////////////////////////////////// Create Article Form/////////////////////////////////////////////////////*/
+/*<<<<<<<<<<<<<<< Article form to create a new article>>>>>>>>>>>>>>>*/
+  .article-form{
+    background-color:#fff; border-radius: 1px; border: 1px solid #DBDBDB;
+  }
+  textarea{
+    max-width: 100%;
+  }
+
+/*<<<<<<<<<<<<<<< Create or update an article image, article audio and article video >>>>>>>>>>>>>>>*/
+  .image-article-header, .audio-article-header, .video-article-header, .reference-article-header{
+    height:25px; background: #696969; color:#fff;
+  }
+  .close-image-file, .close-audio-file, .close-video-file, .close-reference-file{
+    cursor:pointer; margin-top:3px;
+  }
+  .image-article-file, .audio-article-file,.video-article-file, .reference-article-file{
+    margin-top:3px;
+  }
+  .uploaded-image-info, .uploaded-audio-info, .uploaded-video-info{
+    font-size:14px;color:#000;
+  }
+  .uploaded-image-title span, .uploaded-audio-title span, .uploaded-video-title span,
+  .uploaded-image-date span, .uploaded-audio-date span, .uploaded-video-date span,
+  .uploaded-image-author span, .uploaded-audio-author span, .uploaded-video-author span,
+  .uploaded-image-sourceURL span, .uploaded-audio-sourceURL span, .uploaded-video-sourceURL span,
+  .uploaded-image-published-date span, .uploaded-audio-published-date span, .uploaded-video-published-date span{
+    color:#6B6969;
+  }
+  .uploaded-image{
+   width:300px;height:100px;
+  }
+  .image-remove-btn, .audio-remove-btn, .video-remove-btn{
+    margin-top:4px;
+  }
+  .image-edit-btn, .audio-edit-btn, .video-edit-btn{
+    margin-top:4px; margin-right:1px;
+  }
+  .image-cancel-btn, .audio-cancel-btn, .video-cancel-btn{
+    margin-top:4px;margin-right:1px;color:#8A1315;
+  }
+  .custom-art-btn{
+    background: #828181; -webkit-border-radius: 0; -moz-border-radius: 0; border-radius: 60px; border: 1px solid #575656; font-style: italic;
+    font-family: Verdana, sans-serif;
+    font-size: 11px;
+    font-weight:400;
+    color: #F2F2F2;
+    padding: 1px 5px 0px 5px;
+  }
+  .custom-art-btn:hover{
+    background: #969595; color: #000; text-decoration: none;
+  }
+  .if-any{
+    font-weight:normal
+  }
+  .glyphicon-calendar{
+    cursor:pointer;
+  }
+  .image-progress{
+    width:400px;height:180px
+  }
+
+/*<<<<<<<<<<<<<<< Close article image, video, audio and reference >>>>>>>>>>>>>>>*/
+  svg {
+  cursor: pointer; height: 22px; width: 19px;
+  }
+  svg > circle {
+      stroke: #000; fill: #2B2B2B;
+  }
+  svg > path {
+      stroke: white;
+  }
+  svg:hover > circle {
+      stroke: #F5F5F5; fill: #F5F5F5;
+  }
+  svg:hover > path {
+      stroke: black;
+  }
+
+/*<<<<<<<<<<<<<<< Progress bar for image uploading >>>>>>>>>>>>>>>*/
+  #myProgress {
+    margin-top:-10px; position: relative; width: 100%; height: 30px; background-color: #ddd;
+  }
+  #myProgressBar {
+    position: absolute; width: 0%; height: 100%; background-color: #64B5DE;
+  }
+  #myProgressLabel {
+    text-align: center; line-height: 30px; color: #000;
+  }
+
+/*<<<<<<<<<<<<<<< Buttons for submit, update, edit or cancel in show article and add article files >>>>>>>>>>>>>>>*/
+  .submitBtn, .editBtn, .resetBtn{
+    margin-left:5px;
+    border-radius:1px;
+  }
+
+/*<<<<<<<<<<<<<<< Horizontal strike like (-------Or-------) to select one among two files >>>>>>>>>>>>>>>*/
+.strike {
+  display: block; text-align: center; overflow: hidden; white-space: nowrap; color: #CCCCCC; font-style:italic; font-size:15px;
+}
+.strike > span {
+  position: relative; display: inline-block;
+}
+.strike > span:before,
+.strike > span:after {
+  content: ""; position: absolute; top: 50%; width: 120px; height: 1px; background: #DBDBDB;
+}
+.strike > span:before {
+  right: 100%; margin-right: 15px; 
+}
+.strike > span:after {
+  left: 100%; margin-left: 15px;
+}

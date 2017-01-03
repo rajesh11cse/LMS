@@ -1,0 +1,52 @@
+<div ng-controller="PatientRecordCtrl">
+    <section class="container-fluid">
+        <div class="row well custom-row-well">
+            <b class=""> <a class="text-primary" href="#!/superadminlogin">Dashboard</a> / Patient Records</b>
+        </div>
+        <spinner name="welcomePageSpinner" on-loaded="welcome_To_Dashboard()">
+          <div data-ng-include="'/articles/views/spinner.html'" ></div> 
+        </spinner>
+        <div class="row well custom-row-well">
+            <div class="form-group" style="font-family: Arial;">
+                <label class="">Search Patient by name and phone number. </label>
+                 <input type="text" name="searchInput" class="form-control input-lg" type="text" ng-model = "query" ng-change="getPatients(query);"placeholder = "Search" class="form-control input-lg">
+                </div>
+            <div style="color:red;" ng-show="patient_found"><center>No record found for entry '<b><span ng-bind="query"></span></b>'.</center></div>
+
+            <div ng-show="showTable" style = "font-size:12px; font-family: Cambria,Georgia,serif;">
+                <table class="zceaTable" summary="Sample Table" style = "width:100%;">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">User Id</th>
+                            <th scope="col">Registration Number</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Age</th>
+                            <th scope="col">DOB</th>
+                            <th scope="col">Mobile No</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr scope="row" ng-repeat = "data in patientDetail">
+                            <td >{{$index+1+indexIncrement}}</td>
+                            <td >{{data.userId}}</td>
+                            <td >{{data.patientRegistrationNumber}}</td>
+                            <td >{{data.patientName}}</td>
+                            <td >{{data.patientAge}}</td>
+                            <td >{{data.dateOfBirth | date : format : timezone}}</td>
+                            <td >{{data.mobileNumber}}</td>
+                            
+                            <td ng-class = "">
+                                <button title="Show treatment and panel details" data-placement="top" class = "btn btn-info btn-sm " href="" ng-click="goToTreatments(data)">Detail</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div ng-show="showTable">
+               <hr style="border: 1px solid grey">
+            </div>
+        </div>
+    </section>
+</div>

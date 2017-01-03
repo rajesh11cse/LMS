@@ -1,0 +1,33 @@
+{
+  "memory": {
+    "name": "memory",
+    "connector": "memory"
+  },
+
+  "mysql-local": {
+    "host": "127.0.0.1",
+    "database": "FormTitanMain",
+    "username": "root",
+    "password": "",
+    "name": "mysql",
+    "connector": "mysql"
+  },
+
+  "mysql": {
+    "host": "45.55.150.205",
+    "database": "FormTitanMain",
+    "user": "benny",
+    "password": "WERTHGFH123",
+    "name": "mysql-master1",
+    "connector": "mysql"
+  },
+
+  "mysql-master2": {
+    "host": "45.55.150.223",
+    "database": "FormTitanMain",
+    "user": "mysql-master2",
+    "password": "WERTHGFH123",
+    "name": "mysql-master2",
+    "connector": "mysql"
+  }
+}

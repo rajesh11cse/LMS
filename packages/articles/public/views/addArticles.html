@@ -1,0 +1,356 @@
+<div ng-controller="add-articles-controller">
+  <section class="container-fluid  custom-container-fluid">
+    <div class="row well custom-row-well">
+      <b class=""> <a class="text-primary" href="#!/superadminlogin">Dashboard</a> / <a class="text-primary" href="#!/articles">Articles</a> / Article Form</b>
+    </div>
+    <script type="text/javascript">
+      $(function(){
+        $.fn.openFile = function(msg) {
+          var fileid = '#'+msg;
+          $(fileid).slideDown(100);
+        };
+
+        $.fn.closeFile = function(msg) {
+          var fileid = '#'+msg;
+          $(fileid).slideUp(200);
+        };
+      })
+    </script>
+    <spinner name="artSpinner"  on-loaded="callToSpinner()">
+      <div data-ng-include="'/articles/views/spinner.html'" ></div>
+    </spinner>
+    <div class = "row well custom-row-well">
+      <div class="col-md-12 article-form">
+        <h3 class="main_title"><strong>Article Form</strong></h3>
+        <p class="required">* <span>Required Fields  </span> </p>
+        <label>Create your article here!</label>
+        <div class="col-md-12">
+
+         <div class="form-group">
+          <label class="required" for="title"><em>*</em>Title :</label>
+          <input type="text" name="title"  placeholder="Title" ng-model = "artAttributs.title" class="form-control input-sm" id="title">
+        </div>
+
+        <div class="form-group"> 
+          <label class="required" for="sourceURL">Source URL :</label>
+          <input type="text" name="sourceURL"  placeholder="Article Source URL" ng-model = "artAttributs.sourceURL" class="form-control input-sm" id="sourceURL">
+        </div>
+
+        <div class="form-group">
+          <label class="" for="authorName">Author Name :</label>
+          <input type="text" name="articleAuthorName" placeholder="Author Name" ng-model = "artAttributs.authorName" class="form-control input-sm" id="authorName">
+        </div>
+
+        <div class="form-group">
+          <label class="required" for="articleReferencesPublishedDate">Published Date(<span class="if-any"> if any</span> ) :</label>
+          <div class='input-group date'>
+            <input type='text' class="form-control input-sm" uib-datepicker-popup="{{format}}" ng-model="artAttributs.publishedDate" is-open="popup.article" datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" readonly/>
+            <span class="input-group-addon">
+              <span class="glyphicon glyphicon-calendar" ng-click="openCalendar('article')"></span>
+            </span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="required" for="files">Attach an article file from here <a href="" ng-click="showImage = true;" onclick="$().openFile('ImageFiles');">image</a> / <a href="" ng-click="showAudio = true;"  onclick="$().openFile('AudioFiles');">audio</a> / <a href="" ng-click="showVideo = true;"  onclick="$().openFile('VideoFiles');">video</a></label>
+          <br> 
+          
+          <!-- Create or update an image article-->
+          <div ng-show="showImage" id="ImageFiles" class="thumbnail col-md-6">
+            <p class = "col-md-12 image-article-header">
+              <span class="pull-right close-image-file" data-toggle="tooltip" title="Close"  tooltip-placement="bottom"  tooltip-trigger="mouseenter" onclick="$().closeFile('ImageFiles');">
+               <svg>
+                <circle cx="10" cy="10" r="8" stroke="black" stroke-width="1.2" fill="white" />
+                <path stroke="black" stroke-width="1.5" fill="none" d="M6.00,6.25,14.75,14.75" />
+                <path stroke="black" stroke-width="1.5" fill="none" d="M6.25,14.75,14.10,6.00" />
+              </svg>
+            </span>
+            <span  class="pull-left image-article-file">Image File</span><button ng-show="showImageRemoved" class="pull-right custom-art-btn image-remove-btn" ng-click="removeArticleImage();" >remove</button><button ng-show="imageUploaded" class="pull-right custom-art-btn image-edit-btn"ng-click="editToggleArticleImage();" >edit</button><button ng-show="isImageUpadteCanceled" class="pull-right custom-art-btn image-cancel-btn" ng-click="editToggleArticleImage();" >cancel</button>
+          </p>
+          
+          <div ng-show="imageUploaded" class="col-md-12 uploaded-image-info">
+            <span class="col-md-3">Title</span><span class = "col-md-9 uploaded-image-title">&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;<span ng-bind = "uploadedImageObj.title | characters:52 :true" data-toggle="tooltip" title = "{{uploadedImageObj.title}}" ></span></span>
+          </div>
+          <div ng-show="imageUploaded" class="col-md-8 uploaded-image-info">
+            <span class="col-md-5">Date</span><span class = "col-md-7 uploaded-image-date">:&nbsp;&nbsp;&nbsp;<span ng-bind = "uploadedImageObj.createdAt | date : 'MMM d, y h:mm:ss a'| characters:21 :true"></span></span><br>
+            <span class="col-md-5">Author Name</span><span class = "col-md-7 uploaded-image-author">:&nbsp;&nbsp;&nbsp;<span ng-bind= "uploadedImageObj.authorName || 'none'"></span></span><br>
+            <span class="col-md-5">Source URL</span><span class = "col-md-7 uploaded-image-sourceURL">:&nbsp;&nbsp;&nbsp;<span ng-bind = "uploadedImageObj.sourceURL || 'none'"></span></span><br>
+            <span class="col-md-5">Published Date</span><span class = "col-md-7 uploaded-image-published-date">:&nbsp;&nbsp;&nbsp;<span ng-bind = "(uploadedImageObj.publishedDate | date : 'MMM d, y') || 'none'"></span></span>
+          </div>
+          <div ng-show ="imageUploaded && showImageURL" class="col-md-4">
+            <img class="img-responsive thumbnail uploaded-image" ng-src="{{imageURL}}" alt=" Error">
+          </div>
+          <div ng-show ="!imageUploaded" class="col-md-12">
+            <div class="form-group">
+              <label class="required" for="title"><em>*</em>Title :</label>
+              <input type="text" name="title"  placeholder="Image's title" ng-model = "artImageAttributs.title" class="form-control input-sm" id="title">
+            </div>
+
+            <div class="form-group">
+              <label class="" for="authorName">Author Name(<span class="if-any"> if any</span> ) :</label>
+              <input type="text" name="authorName"  placeholder="Image's author name" ng-model = "artImageAttributs.authorName" class="form-control input-sm" id="authorName">
+            </div>
+
+            <div class="form-group">
+              <label class="required" for="PublishedDate">Published Date(<span class="if-any"> if any</span> ) :</label>
+              <div class='input-group date'>
+                <input type='text' class="form-control input-sm" uib-datepicker-popup="{{format}}" ng-model="artImageAttributs.publishedDate" is-open="popup.image" datepicker-options="dateOptions" close-text="Close" alt-input-formats="altInputFormats" readonly/>
+                <span class="input-group-addon">
+                  <span class="glyphicon glyphicon-calendar" ng-click="openCalendar('image')"></span>
+                </span>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="required" for="sourceURL"><em>*</em>Source URL :</label>
+              <input type="text" name="sourceURL"  placeholder="Image's source URL" ng-model = "artImageAttributs.sourceURL" class="form-control input-sm" id="sourceURL" ng-disabled="artImageAttributs.imageFile" ng-change="">
+            </div>
+
+            <div class="strike">
+              <span>Or</span>
+            </div> 
+
+            <div class="form-group">
+              <label class="required" for="image"><em>*</em>Upload Image :</label>
+              <input ng-disabled="artImageAttributs.sourceURL.length>0" ngf-select="onFileSelect($files)" name="file" ngf-accept="'image/*'" type="file" ng-model="artImageAttributs.imageFile">
+              <br>
+              <img class="img-responsive thumbnail image-progress" ngf-src="artImageAttributs.imageFile" alt="Uploading Error">
+              <div id="myProgress" ng-show="showProgress">
+                <div id="myProgressBar">
+                  <div id="myProgressLabel">0%</div>
+                </div>
+              </div>
+            </div>
+            <button ng-show="!updateImageNow" type="submit" class="btn btn-sm btn-raised btn-success submitBtn pull-right" ng-click="createOrUpdateImageArticle(artImageAttributs)"><i class="glyphicon glyphicon-upload"></i> Submit</button>
+            <button ng-show="updateImageNow" type="submit" class="btn btn-sm btn-raised btn-success editBtn pull-right" ng-click="createOrUpdateImageArticle(artImageAttributs)"><i class="glyphicon glyphicon-edit"></i> Update</button>
+            <button type="submit" class="btn btn-sm btn-raised btn-danger resetBtn pull-right" id="btn-register" ng-click="resetImageAttributs();" ><i class="glyphicon glyphicon-repeat"></i> Reset</button>
+            <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          </div>
+        </div> 
+
+        <!-- Create or update an audio article -->
+        <div ng-show="showAudio" id="AudioFiles" class="thumbnail col-md-6">
+          <p class = "col-md-12 audio-article-header">
+            <span class="pull-right close-audio-file" data-toggle="tooltip" title="Close"  tooltip-placement="bottom"  tooltip-trigger="mouseenter" onclick="$().closeFile('AudioFiles');">
+              <svg>
+                <circle cx="10" cy="10" r="8" stroke="black" stroke-width="1.2" fill="white" />
+                <path stroke="black" stroke-width="1.5" fill="none" d="M6.00,6.25,14.75,14.75" />
+                <path stroke="black" stroke-width="1.5" fill="none" d="M6.25,14.75,14.10,6.00" />
+              </svg>
+            </span>
+            <span class="pull-left audio-article-file">Audio File</span><button ng-show="showAudioRemoved" class="pull-right custom-art-btn audio-remove-btn"ng-click="removeArticleAudio();" >remove</button><button ng-show="audioUploaded" class="pull-right custom-art-btn audio-edit-btn" ng-click="editToggleArticleAudio();" >edit</button><button ng-show="isAudioUpadteCanceled" class="pull-right custom-art-btn audio-cancel-btn" ng-click="editToggleArticleAudio();" >cancel</button>
+          </p>
+          
+          <div ng-show="audioUploaded" class="col-md-12 uploaded-audio-info">
+            <span class="col-md-3">Title</span><span class = "col-md-9 uploaded-audio-title">&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;<span ng-bind = "uploadedAudioObj.title | characters:52 :true" data-toggle="tooltip" title = "{{uploadedAudioObj.title}}" ></span></span>
+            <span class="col-md-3">Date</span><span class = "col-md-9 uploaded-audio-date">&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;<span ng-bind = "uploadedAudioObj.createdAt | date : 'MMM d, y h:mm:ss a'"></span></span><br>
+            <span class="col-md-3">Author Name</span><span class = "col-md-9 uploaded-audio-author">&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;<span ng-bind= "uploadedAudioObj.authorName || 'none'"></span></span><br>
+            <span class="col-md-3">Source URL</span><span class = "col-md-9 uploaded-audio-sourceURL">&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;<span ng-bind = "uploadedAudioObj.sourceURL"></span></span><br>
+            <span class="col-md-3">Published Date</span><span class = "col-md-9 uploaded-audio-published-date">&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;<span ng-bind = "(uploadedAudioObj.publishedDate | date : 'MMM d, y') || 'none'"></span></span>
+          </div>
+          <div ng-show ="!audioUploaded" class="col-md-12">
+            <div class="form-group">
+              <label class="required" for="title"><em>*</em>Title :</label>
+              <input type="text" name="title"  placeholder="Audio's title" ng-model = "artAudioAttributs.title" class="form-control input-sm" id="title">
+            </div>
+
+            <div class="form-group">
+              <label class="" for="authorName">Author Name(<span class="if-any"> if any</span> ) :</label>
+              <input type="text" name="authorName"  placeholder="Audio's author name" ng-model = "artAudioAttributs.authorName" class="form-control input-sm" id="authorName">
+            </div>
+
+            <div class="form-group">
+              <label class="required" for="PublishedDate">Published Date(<span class="if-any"> if any</span> ) :</label>
+              <div class='input-group date'>
+                <input type='text' class="form-control input-sm" uib-datepicker-popup="{{format}}" ng-model="artAudioAttributs.publishedDate" is-open="popup.audio" datepicker-options="dateOptions" close-text="Close" alt-input-formats="altInputFormats" readonly/>
+                <span class="input-group-addon">
+                  <span class="glyphicon glyphicon-calendar" ng-click="openCalendar('audio')"></span>
+                </span>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="required" for="sourceURL"><em>*</em>Source URL :</label>
+              <input type="text" name="sourceURL"  placeholder="Audio's source URL" ng-model = "artAudioAttributs.sourceURL" class="form-control input-sm" id="sourceURL">
+            </div>
+
+            <div class="form-group">
+              <label class="required" for="cloudURL">Cloud URL(<span class="if-any"> if any</span> ) :</label>
+              <input type="text" name="cloudURL"  placeholder="Audio's cloud URL" ng-model = "artAudioAttributs.cloudURL" class="form-control input-sm" id="cloudURL">
+            </div>
+
+            <div class="form-group">
+              <label class="required" for="mimeType"><em>*</em> Audio Type :</label><br>
+              <select class="form-control input-sm" ng-model="artAudioAttributs.mimeType">
+                <option value="">---Select audio type--- </option>
+                <option>audio/basic </option>
+                <option>auido/L24   </option>
+                <option>audio/mid   </option>
+                <option>audio/mpeg  </option>
+                <option>audio/mp4   </option>
+                <option>audio/x-aiff </option>
+                <option>audio/x-mpegurl</option>
+                <option>audio/vnd.rn-realaudio </option>
+                <option>audio/ogg    </option>
+                <option>audio/vorbis </option>
+                <option>audio/vnd.wav</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="required" for="sortDescription"><em>*</em> Sort description about audio :</label>
+              <textarea class="form-control input-sm" ng-model = "artAudioAttributs.sortDescription" name="sortDescription" class="form-control input-sm" id="sortDescription" placeholder = "Please put your sort description about audio here.." rows="4" required></textarea>
+            </div>
+
+            <button ng-show="!updateAudioNow"type="submit" class="btn btn-sm btn-raised btn-success submitBtn pull-right" id="btn-register" ng-click="createOrUpdateAudioArticle(artAudioAttributs)"><i class="glyphicon glyphicon-upload"></i> Submit</button>
+            <button ng-show="updateAudioNow" type="submit" class="btn btn-sm btn-raised btn-success editBtn pull-right" id="btn-register" ng-click="createOrUpdateAudioArticle(artAudioAttributs)"><i class="glyphicon glyphicon-edit"></i> Update</button>
+            <button type="submit" class="btn btn-sm btn-raised btn-danger resetBtn pull-right" id="btn-register" ng-click="resetAudioAttributs();" ><i class="glyphicon glyphicon-repeat"></i> Reset</button>
+            <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          </div>
+        </div>  
+
+        <!-- Create or update an video article -->
+        <div ng-show="showVideo" id="VideoFiles" class="thumbnail col-md-6">
+          <p class = "col-md-12 video-article-header">
+            <span class="pull-right close-video-file" data-toggle="tooltip" title="Close"  tooltip-placement="bottom"  tooltip-trigger="mouseenter" onclick="$().closeFile('VideoFiles');">
+              <svg>
+                <circle cx="10" cy="10" r="8" stroke="black" stroke-width="1.2" fill="white" />
+                <path stroke="black" stroke-width="1.5" fill="none" d="M6.00,6.25,14.75,14.75" />
+                <path stroke="black" stroke-width="1.5" fill="none" d="M6.25,14.75,14.10,6.00" />
+              </svg>
+            </span>
+            <span class="pull-left video-article-file">Video File</span><button ng-show="showVideoRemoved" class="pull-right custom-art-btn video-remove-btn"ng-click="removeArticleVideo();" >remove</button><button ng-show="videoUploaded" class="pull-right custom-art-btn video-edit-btn" ng-click="editToggleArticleVideo();" >edit</button><button ng-show="isVideoUpadteCanceled" class="pull-right custom-art-btn video-cancel-btn" ng-click="editToggleArticleVideo();" >cancel</button>
+          </p>
+          
+          <div ng-show="videoUploaded" class="col-md-12 uploaded-video-info">
+            <span class="col-md-3">Title</span><span class = "col-md-9 uploaded-video-title">&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;<span ng-bind = "uploadedVideoObj.title | characters:52 :true" data-toggle="tooltip" title = "{{uploadedVideoObj.title}}" ></span></span>
+            <span class="col-md-3">Date</span><span class = "col-md-9 uploaded-video-date">&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;<span ng-bind = "uploadedVideoObj.createdAt | date : 'MMM d, y h:mm:ss a'"></span></span><br>
+            <span class="col-md-3">Author Name</span><span class = "col-md-9 uploaded-video-author">&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;<span ng-bind= "uploadedVideoObj.authorName || 'none'"></span></span><br>
+            <span class="col-md-3">Source URL</span><span class = "col-md-9 uploaded-video-sourceURL">&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;<span ng-bind = "uploadedVideoObj.sourceURL"></span></span><br>
+            <span class="col-md-3">Published Date</span><span class = "col-md-9 uploaded-video-published-date">&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;<span ng-bind = "(uploadedVideoObj.publishedDate | date : 'MMM d, y') || 'none'"></span></span>
+          </div>
+          <div ng-show ="!videoUploaded" class="col-md-12">
+            <div class="form-group">
+              <label class="required" for="title"><em>*</em>Title :</label>
+              <input type="text" name="title"  placeholder="Video's title" ng-model = "artVideoAttributs.title" class="form-control input-sm" id="title">
+            </div>
+
+            <div class="form-group">
+              <label class="" for="authorName">Author Name(<span class="if-any"> if any</span> ) :</label>
+              <input type="text" name="authorName"  placeholder="Video's author name" ng-model = "artVideoAttributs.authorName" class="form-control input-sm" id="authorName">
+            </div>
+
+            <div class="form-group">
+              <label class="required" for="PublishedDate">Published Date(<span class="if-any"> if any</span> ) :</label>
+              <div class='input-group date'>
+                <input type='text' class="form-control input-sm" uib-datepicker-popup="{{format}}" ng-model="artVideoAttributs.publishedDate" is-open="popup.video" datepicker-options="dateOptions" close-text="Close" alt-input-formats="altInputFormats" readonly/>
+                <span class="input-group-addon">
+                  <span class="glyphicon glyphicon-calendar" ng-click="openCalendar('video')"></span>
+                </span>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="required" for="sourceURL"><em>*</em>Source URL :</label>
+              <input type="text" name="sourceURL"  placeholder="Video's source URL" ng-model = "artVideoAttributs.sourceURL" class="form-control input-sm" id="sourceURL">
+            </div>
+
+            <div class="form-group">
+              <label class="required" for="cloudURL">Cloud URL(<span class="if-any"> if any</span> ) :</label>
+              <input type="text" name="cloudURL"  placeholder="Video's cloud URL" ng-model = "artVideoAttributs.cloudURL" class="form-control input-sm" id="cloudURL">
+            </div>
+            <div class="form-group">
+              <label class="required" for="videoType"><em>*</em> Video Type :</label><br>
+              <select class="form-control input-sm" ng-model="artVideoAttributs.mimeType">
+                <option value="">---Select video type--- </option>
+                <option>YouTube</option>
+                <option>BrightCove</option>
+                <option>Vimeo</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="required" for="sortDescription"><em>*</em> Sort description about video :</label>
+              <textarea class="form-control input-sm" ng-model = "artVideoAttributs.sortDescription" name="sortDescription" class="form-control input-sm" id="sortDescription" placeholder = "Please put your sort description about video here.." rows="4" required></textarea>
+            </div>
+
+            <button ng-show="!updateVideoNow"type="submit" class="btn btn-sm btn-raised btn-success submitBtn pull-right" id="btn-register" ng-click="createOrUpdateVideoArticle(artVideoAttributs)"><i class="glyphicon glyphicon-upload"></i> Submit</button>
+            <button ng-show="updateVideoNow" type="submit" class="btn btn-sm btn-raised btn-success editBtn pull-right" id="btn-register" ng-click="createOrUpdateVideoArticle(artVideoAttributs)"><i class="glyphicon glyphicon-edit"></i> Update</button>
+            <button type="submit" class="btn btn-sm btn-raised btn-danger resetBtn pull-right" id="btn-register" ng-click="resetVideoAttributs();" ><i class="glyphicon glyphicon-repeat"></i> Reset</button>
+            <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="col-md-12"> 
+      <div class="form-group">
+        <label class="required" for="description"><em>*</em> Description :</label>
+        <form method="post">
+          <textarea ui-tinymce="tinymceOptions" ng-model="artAttributs.description"></textarea>
+        </form>
+      </div>
+      <style type="text/css">
+        .back{
+          background: green;
+        }
+      </style>
+      <div class="form-group">
+        <span>To add any reference <a href="" ng-click="goToCreateRefArticle();"  onclick="$().openFile('References');"><i>click here<i></a></span><br>
+      </div>
+      <span ng-repeat="ref in referenceObj">
+        <span class="dropdown">
+          <button class="btn btn-xs btn-primary dropdown-toggle" ng-class="{'back':doBack}" type="button" data-toggle="dropdown">Reference {{$index+1}}
+            <span class="caret"></span></button>
+            <ul class="dropdown-menu">
+              <li><a href="">View</a></li>
+              <li><a href="" ng-click="goToUpdateRefArticle(ref, $index);doBack = true;" onclick="$().openFile('References');">Update</a></li>
+              <li><a href="" ng-click="removeRefArticle(ref._id, $index);">Remove</a></li>
+            </ul>
+          </span>
+        </span>
+        <div ng-show="showReference" id="References" class="thumbnail col-md-12">
+          <p class = "col-md-12 reference-article-header">
+            <span class="pull-right close-reference-file" data-toggle="tooltip" title="Close"  tooltip-placement="bottom"  tooltip-trigger="mouseenter" onclick="$().closeFile('References');">
+              <svg>
+                <circle cx="10" cy="10" r="8" stroke="black" stroke-width="1.2" fill="white" />
+                <path stroke="black" stroke-width="1.5" fill="none" d="M6.00,6.25,14.75,14.75" />
+                <path stroke="black" stroke-width="1.5" fill="none" d="M6.25,14.75,14.10,6.00" />
+              </svg>
+            </span>
+            <span class="pull-left reference-article-file" >Refrences</span>
+          </p>
+          <div class="col-md-12">
+            <div class="form-group">
+              <label class="required" for="sourceURL"><em>*</em>Source URL :</label>
+              <input type="text" name="sourceURL"  placeholder="References Source URL" ng-model = "artReferenceAttributs.sourceURL" class="form-control input-sm" id="sourceURL" required>
+            </div>
+            <div class="form-group">
+              <label class="required" for="articleReferencesPublishedDate">Published Date(<span class="if-any"> if any</span> ) :</label>
+              <div class='input-group date'>
+                <input type='text' class="form-control input-sm" uib-datepicker-popup="{{format}}" ng-model="artReferenceAttributs.publishedDate" is-open="popup.reference" datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" readonly/>
+                <span class="input-group-addon">
+                  <span class="glyphicon glyphicon-calendar" ng-click="openCalendar('reference')"></span>
+                </span>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="" for="authorName">Author Name(<span class="if-any"> if any</span> ) :</label>
+              <input type="text" name="authorName"  placeholder="Author Name" ng-model = "artReferenceAttributs.authorName" class="form-control input-sm" id="authorName">
+            </div>
+          </div>
+          <button ng-show="!updateRefNow" type="submit" class="btn btn-sm btn-raised btn-success submitBtn pull-right" id="btn-register" ng-click="createRefArticle(artReferenceAttributs)">Submit</button>
+          <button ng-show="updateRefNow"  type="submit" class="btn btn-sm btn-raised btn-success submitBtn pull-right" id="btn-register" ng-click="updateRefArticle(artReferenceAttributs)">Update</button>
+          <br>
+        </div>
+
+        <button type="submit" class="btn btn-sm btn-raised btn-success submitBtn pull-right" id="btn-register" ng-click="createArticle(artAttributs, artReferenceAttributs)"><i class="glyphicon glyphicon-edit"></i> Submit Article</button>
+        <button type="submit" href="" class="btn btn-sm btn-raised btn-danger resetBtn pull-right" ng-click="cancelCreateArticle();" id="btn-register"><i class="glyphicon glyphicon-remove"></i> Cancel</button>
+
+        <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      </div>
+      <br>
+    </div>
+  </div>
+</section>
+</div>

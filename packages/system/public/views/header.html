@@ -1,0 +1,67 @@
+<nav data-ng-controller="HeaderController" class="navbar navbar-light navbar-fixed-top custom-row-well" 
+style="background-color: #3C6EB4;font-size:17px; font-weight:normal;font-family: Arial; color:#CFD0D1;">
+  <div class="container-fluid"> 
+    <style type="text/css">
+    .activeLink{
+      background-color: #195DBD;
+    }
+    </style>
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>  
+      </button>
+      <a class="navbar-brand" href="" mean-token="'site-title'"  style="color:#fff;font-size:19px;"><b>LMS</b></a>
+    </div>
+    
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav" ng-if="Authenticated == 'true'">
+        <li  ng-class="{activeLink : actMenu === 'userAdmin'}" ng-if="getUsetype == 'superadmin'"><a href="#!/userAdmin?from=superadmin">User Admin</a></li>
+        <li ng-class="{activeLink : actMenu === 'appointmnet'}" ng-if="(getUsetype == 'superadmin' || getUsetype == 'customer')"><a href="#!/getAppointments">Manage Appointment Requests</a></li>
+        <li ng-class="{activeLink : actMenu === 'patientRecord'}" ng-if=" (getUsetype == 'superadmin' || getUsetype == 'customer')">
+        <a href="#!/patientRecord">Patient Records</a></li>
+        <li ng-class="{activeLink : actMenu === 'articles'}" ng-if="(getUsetype == 'superadmin' || getUsetype == 'editor')">
+        <a href="#!/articles">Articles</a></li>
+
+        <li class="dropdown" ng-if="(getUsetype == 'superadmin' || getUsetype == 'customer')">
+          <a ng-class="{activeLink : actMenu === 'dropdown'}" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+          <ul  class="dropdown-menu">
+            <li ng-if="(getUsetype == 'superadmin')"><a href="#!/sendemail">Email</a></li>
+            <li ng-if="(getUsetype == 'superadmin')"><a href="/#!/doctorRegisteration">Doctor Registration</a></li>
+            <li ng-if="(getUsetype == 'superadmin')"><a href="#!/patientRegisteration">Patient Registration</a></li>
+            <li ng-if="(getUsetype == 'superadmin')"><a href="#!/managesubscriptionprice">Manage Subscription Price</a></li>
+            <li ng-if="(getUsetype == 'superadmin')"><a href="#!/restaurantMenu">Create Restaurant Menu</a></li>
+            <li role="separator" class="divider"></li>
+           <li  ng-if="(getUsetype == 'superadmin' || getUsetype == 'customer')"><a href="#!/getAppointments">Manage Appointment Requests</a></li>
+          </ul>
+        </li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right" ng-if="Authenticated == 'true'">
+        <li class="dropdown pull-right">
+         <a ng-class="{activeLink : actMenu === 'userDropdown'}" href='' class="dropdown-toggle" data-toggle="dropdown">
+         Hi {{getUsername}}<b class="caret"></b>
+         </a> 
+          <ul class="dropdown-menu">
+            <li ng-if="Authenticated == 'true' && getUsetype == 'superadmin'"><a href='#!/manageadmin'>Manage Admin</a>
+          </li>                                                                      
+          <li><a ng-click="logout()" href="/">Log Out</a>
+          </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+ <div>
+  <style type="text/css">
+    .toast-center {
+      top: 200px;
+      right: 12px;
+    }
+  </style>
+  <toaster-container toaster-options="{'time-out': 10000, 'close-button':true, 'position-class': 'toast-center'}"></toaster-container>
+</div>
+
+<style type="text/css">

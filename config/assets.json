@@ -1,0 +1,34 @@
+{
+  "core": {
+    "css": {
+      "bower_components/build/css/dist.min.css": [
+      "bower_components/angularjs-toaster/toaster.css"
+      ]
+    },
+    "js": {
+      "bower_components/build/js/dist.min.js": [
+        "bower_components/jquery/dist/jquery.min.js",
+        "bower_components/angular/angular.js",
+        "bower_components/angular-mocks/angular-mocks.js",
+        "bower_components/angular-cookies/angular-cookies.js",
+        "bower_components/angular-resource/angular-resource.js",
+        "bower_components/angular-ui-router/release/angular-ui-router.js",
+        "bower_components/angular-bootstrap/ui-bootstrap.js",
+        "bower_components/angular-bootstrap/ui-bootstrap-tpls.js",
+        "bower_components/bootstrap/dist/js/bootstrap.js",
+        "bower_components/bootstrap-timepicker/js/bootstrap-timepicker.js",
+        "bower_components/angular-busy/dist/angular-busy.js",
+        "bower_components/angular-wizard/dist/angular-wizard.js",
+        "bower_components/ng-file-upload/ng-file-upload.js",
+        "bower_components/angular-truncate-2/dist/angular-truncate-2.js",
+        "bower_components/tinymce/tinymce.js",
+        "bower_components/angular-ui-tinymce/src/tinymce.js",
+        "bower_components/angularjs-toaster/toaster.js",
+        "bower_components/async/dist/async.js",
+        "bower_components/angular-spinners/dist/angular-spinners.js",
+        "bower_components/underscore/underscore.js",
+        "bower_components/angular-underscore-module/angular-underscore-module.js"
+      ]
+    }
+  }
+}

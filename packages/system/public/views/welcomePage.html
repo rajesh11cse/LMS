@@ -48,6 +48,46 @@
 				    </div>
 				</div>
 			</div>
+			<div class="col-md-6">
+				<div class="panel panel-primary"style="color:#8C8B8B; font-style:italic;">
+				    <div class="panel-heading">
+				    	<p class="panel-title">
+				    		<a href="#!/lms/manage_users">Manage Users</a> 
+					    	<span class="pull-right">
+								Total : <span ng-bind="Total_Users"></span>
+							</span>
+						</p>
+				    </div>
+				    <div class="panel-body" style="background-color:#F7F8FA">
+				        <div class="col-md-2">
+							<a href="#!/lms/manage_users"><img ng-src="system/assets/img/manageSuperadmin.png" width="90" alt="image not found"></a>
+						</div>
+						<div class="col-md-10" style="">
+						</div>
+				    </div>
+				</div>
+			</div>
+
+			<div class="col-md-6">
+				<div class="panel panel-primary"style="color:#8C8B8B; font-style:italic;">
+				    <div class="panel-heading">
+				    	<p class="panel-title">
+				    		<a href="#!/lms/issue_return_books">Issue/Return Library Books</a> 
+					    	<span class="pull-right">
+								Total : <span ng-bind="Total_Users"></span>
+							</span>
+						</p>
+				    </div>
+				    <div class="panel-body" style="background-color:#F7F8FA">
+				        <div class="col-md-2">
+							<a href="#!/lms/issue_return_books"><img ng-src="system/assets/img/manageSuperadmin.png" width="90" alt="image not found"></a>
+						</div>
+						<div class="col-md-10" style="">
+						</div>
+				    </div>
+				</div>
+			</div>
+
 			<div class="col-md-6" ng-if="userType == 'superadmin' || userType == 'customer'">
 				<div class="panel panel-primary"style="color:#8C8B8B; font-style:italic;">
 				    <div class="panel-heading">

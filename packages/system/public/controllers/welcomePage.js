@@ -23,7 +23,7 @@ angular.module('mean.system').controller('welcome-page-controller', function(Ses
     // Start the timer
     $timeout(tick, $scope.tickInterval);
     $scope.todaysDate = new Date();
-	$scope.welcome_To_Dashboard = function(){ 
+	/*$scope.welcome_To_Dashboard = function(){ 
 		spinnerService.show('welcomePageSpinner');
 		async.parallel([
 			function(callback){
@@ -152,7 +152,7 @@ angular.module('mean.system').controller('welcome-page-controller', function(Ses
 			}
 
 		});
-	}
+	}*/
 
 
 

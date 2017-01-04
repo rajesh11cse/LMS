@@ -10,30 +10,30 @@ var mongoose = require('mongoose'),
  * Books Schema
  */
 
-var BooksSchema = new Schema({
-  bookId: {
-    type: String,
+var LibraryTransactionSchema = new Schema({
+
+  transationId : {
+    type:String
   },
 
-  bookName: {
-    type: String,
-    required: true
+  transationType : {
+    type:String,
+    required:true,
   },
 
-  authorName: {
-    type: String,
+  usr: {
+    type: Schema.Types.ObjectId,
+    ref: 'Usrs'
+  },
+
+  books: {
+    type: Schema.Types.ObjectId,
+    ref: 'Books'
+  },
+
+  dueDate: {
+    type: Date,
     required: true
-  },
-  
-  availabilityStatus: {
-    type : Boolean,
-    default : true
-  },
-  
-  quantity : {
-    type : Number,
-    required: true,
-    default : 0
   },
 
   createdAt: {
@@ -46,9 +46,9 @@ var BooksSchema = new Schema({
 
 });
 
-var Books = mongoose.model('Books', BooksSchema);
+var LibraryTransactions = mongoose.model('LibraryTransactions', LibraryTransactionSchema);
 
-BooksSchema.pre('save', function(next){
+LibraryTransactionSchema.pre('save', function(next){
     var now = new Date();
     var year = now.getFullYear();
     var month = now.getMonth()+1;
@@ -66,10 +66,10 @@ BooksSchema.pre('save', function(next){
       this.createdAt = now;
     }
     var doc = this;
-    Books.findOne({}).sort({ 'createdAt' : -1 }).limit(1).exec(function(error, latestBook)   {
+    LibraryTransactions.findOne({}).sort({ 'createdAt' : -1 }).limit(1).exec(function(error, latestTransaction)   {
         if(error) return next(error);
-        if(latestBook != null && latestBook != undefined && latestBook.bookId != '' && latestBook.bookId != undefined){
-          var lastDate = latestBook.createdAt
+        if(latestTransaction != null && latestTransaction != undefined && latestTransaction.transationId != '' && latestTransaction.transationId != undefined){
+          var lastDate = latestTransaction.createdAt
           var lyear = lastDate.getFullYear();
       
           var lmonth = lastDate.getMonth()+1;
@@ -82,15 +82,13 @@ BooksSchema.pre('save', function(next){
             if(lday <= 9){
             lday = 0+lday.toString();
           }
-
-         
           if(year.toString() + month.toString() +day.toString() == lyear.toString() + lmonth.toString() +lday.toString()){
-            var currentUserId = latestBook.bookId.substr(11, 12)
-           
+            var currentUserId = latestTransaction.transationId.substr(11, 12)
+            console.log(currentUserId);
            
            if(parseInt(currentUserId) < 9){
               var increasedCount = parseInt(currentUserId)+1;
-              
+              console.log(increasedCount);
               currentUserId = '00'+increasedCount;
             }else if(parseInt(currentUserId) < 99){
               var increasedCount = parseInt(currentUserId)+1;
@@ -98,12 +96,12 @@ BooksSchema.pre('save', function(next){
             }
 
             var currentLastId = currentUserId;
-            doc.bookId = "BID"+year.toString() + month.toString() +day.toString()+currentLastId;
+            doc.transationId = "TID"+year.toString() + month.toString() +day.toString()+currentLastId;
           }else{
-            doc.bookId = "BID"+year.toString() + month.toString() +day.toString()+'001';
+            doc.transationId = "TID"+year.toString() + month.toString() +day.toString()+'001';
           }
         }else{
-          doc.bookId = "BID"+year.toString() + month.toString() +day.toString()+'001';
+          doc.transationId = "TID"+year.toString() + month.toString() +day.toString()+'001';
         }
         next();
     });

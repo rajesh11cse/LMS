@@ -7,6 +7,7 @@
 
     var manage_books = require('../controllers/manage_books');
     var manage_usrs = require('../controllers/manage_users');
+    var issue_return_books = require('../controllers/issue_return_books');
 
     app.get('/api/lms/example/anyone', function (req, res, next) {
       res.send('Anyone can access this');
@@ -44,9 +45,13 @@
     app.route('/api/lms/remove_book')
       .delete(manage_books.remove_book);
 
-     // API for remove books
+     // API for search user
     app.route('/api/lms/search_user')
       .get(manage_usrs.search_usr);
+
+    // API for issue books
+    app.route('/api/lms/issue_book')
+      .post(issue_return_books.issue_book);
 
     app.get('/api/lms/example/render', function (req, res, next) {
       Lms.render('index', {

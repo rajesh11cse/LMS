@@ -20,146 +20,100 @@ angular.module('mean.system').controller('issue_return_books_Ctrl',['SessionServ
 	      toaster.pop({type: type, title: title});// Dispay a flash on brower along with title(message).
 	    };
 
-	$scope.search_user = function(search){
-		$scope.showPatientDetail = false;
-		if(search.length>2){
-	      if(search.match("^[(0-9)]"+".*")){
-	        var patient_promie = $http.get('/api/lms/search_user?userName=&mobileNumber='+search);
-	          patient_promie.success(function (response){
-	          	if(response.result == 'Success' && response.data.length>0){
-	          		$scope.users_list = response.data;
-	          		$scope.showTable = true;
-	          		$scope.user_found = false;
-	          	}else{
-	          		$scope.showTable = false;
-					$scope.user_found = true;
-		        }
-	        }).error(function(data){
-				var httpError = httpErrorService.httpErrorMessage(data, status);
-			    $scope.callSuccessError('error', httpError);
-			});
-	      } else {
-	        var patient_promie = $http.get('/api/lms/search_user?userName='+search+'&mobileNumber=');
-	          patient_promie.success(function (response){
-	            if(response.result == 'Success' && response.data.length>0){
-	          		$scope.users_list = response.data;
-	          		$scope.showTable = true;
-	          		$scope.user_found = false;
-	          	}else{
-	          		$scope.showTable = false;
-					$scope.user_found = true;
-	          	}
-	        }).error(function(data){
-				var httpError = httpErrorService.httpErrorMessage(data, status);
-			    $scope.callSuccessError('error', httpError);
-			});
-	      }
-	    }else{
-	    	$scope.showTable = false;
-	    }
-	};
+	 //>>>>>>>>>>>>>>>>> Calendar for Date of Birth >>>>>>>>>>>>>>//
+	    $scope.today = function() {
+	  		$scope.dueDate = new Date();
+	    };
+	    $scope.today();
+	    $scope.dateOptions = {
+	      	formatYear: 'yy',
+	      	minDate: new Date(),
+	      	startingDay: 1
+	    };
+
+	    $scope.open = function() {
+	      $scope.popup.opened = true;
+	    };
+
+	    $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
+	    $scope.format = $scope.formats[0];
+
+	    $scope.popup = {
+	      	opened: false
+	    };
+
+    
+    	// Search user by name and mobile number
+		$scope.search_user = function(search){
+			$scope.showPatientDetail = false;
+			if(search.length>2){
+		      if(search.match("^[(0-9)]"+".*")){
+		        var patient_promie = $http.get('/api/lms/search_user?userName=&mobileNumber='+search);
+		          patient_promie.success(function (response){
+		          	if(response.result == 'Success' && response.data.length>0){
+		          		$scope.users_list = response.data;
+		          		$scope.showTable = true;
+		          		$scope.user_found = false;
+		          	}else{
+		          		$scope.showTable = false;
+						$scope.user_found = true;
+			        }
+		        }).error(function(data){
+					var httpError = httpErrorService.httpErrorMessage(data, status);
+				    $scope.callSuccessError('error', httpError);
+				});
+		      } else {
+		        var patient_promie = $http.get('/api/lms/search_user?userName='+search+'&mobileNumber=');
+		          patient_promie.success(function (response){
+		            if(response.result == 'Success' && response.data.length>0){
+		          		$scope.users_list = response.data;
+		          		$scope.showTable = true;
+		          		$scope.user_found = false;
+		          	}else{
+		          		$scope.showTable = false;
+						$scope.user_found = true;
+		          	}
+		        }).error(function(data){
+					var httpError = httpErrorService.httpErrorMessage(data, status);
+				    $scope.callSuccessError('error', httpError);
+				});
+		      }
+		    }else{
+		    	$scope.showTable = false;
+		    }
+		};
 		 // Select user for issue/return book
 		$scope.select_user = function(data){
-			console.log(data)
 			$scope.selected_user = data;
 			$scope.showTable = false;
 			$scope.show_user_detail = true;
 		};
 
+		// Issue a book.
+		$scope.issue_books = function(book_info){
+			var params = {
+				'user_id'		:  $scope.selected_user._id, 
+				'book_detail'   :  book_info, 
+				'dueDate'		:  $scope.dueDate,
+			}
 
-       // Add books.
-		$scope.add_books = function(book){
-			if(book){
-				var book_Obj = {
-					'bookName'             : book.b_name,
-					'authorName'       	   : book.a_name,
-					'availabilityStatus'   : true,
-					'quantity'	           : parseInt(book.qty),
-					'limit'                : $scope.limit, 
-					'pageNumber'           : $scope.pageNumber
+			console.log(params)
+
+			$http.post('/api/lms/issue_book', params).success(function(data){
+				console.log(data.result);
+				if(data.result == 'Success'){
+					$scope.show_issue_book_form = false;
+					$scope.callSuccessError('success', 'Book has been issued successfully');
+				}else{
+	      			$scope.callSuccessError('error', 'Not able to issue the book.');
 				}
-				$http.post('/api/lms/add_books', book_Obj).success(function(data){
-					if(data.result == 'Success' && data.data.length>0){
-						$scope.show_books_form  = false;
-						$scope.show_books     = true;
-						$scope.get_books 	 = data.data;
-						$scope.total_books 	 = data.count;
-						$scope.indexIncrement = $scope.currentPage > 0 ? (($scope.currentPage-1)*$scope.limit): 0;
-						$scope.callSuccessError('success', 'Book has been added successfully');
-					}else{
-						$scope.show_books_form  = false;
-						$scope.show_books = false;
-		      			$scope.callSuccessError('error', 'No books found in database');
-					}
-				}).error(function (data, status){
-		          	var httpError = httpErrorService.httpErrorMessage(data, status);
-		         	$scope.callSuccessError('error', httpError);
-				});
-			}else{
-				$scope.callSuccessError('error', '(*) required fields.');
-			}
+			}).error(function (data, status){
+	          	var httpError = httpErrorService.httpErrorMessage(data, status);
+	         	$scope.callSuccessError('error', httpError);
+			});
 		}
 
 
-		// Delete book.
-		$scope.remove_book = function(book){
-			 if(window.confirm('Are you sure you want to delete the book ?')){
-				$http.delete('/api/lms/remove_book', {'id':book._id, 'limit': $scope.limit, 'pageNumber': $scope.currentPage}).success(function(data){
-					if(data.result == 'Success' && data.data.length>0){
-						$scope.get_books 	 = data.data;
-						$scope.total_books 	 = data.count;
-						$scope.indexIncrement = $scope.currentPage > 0 ? (($scope.currentPage-1)*$scope.limit): 0;
-						$scope.callSuccessError('success', 'Book has been removed successfully');
-					}else{
-						$scope.show_books_form  = false;
-						$scope.show_books = false;
-		      			$scope.callSuccessError('error', 'No books found in database.');
-					}
-				}).error(function (data, status){
-		          	var httpError = httpErrorService.httpErrorMessage(data, status);
-		         	$scope.callSuccessError('error', httpError);
-				});
-			}
-		}
-
-		// Activate user.
-		$scope.activateuser = function(user){
-			 if(window.confirm('Are you sure you want to activate user '+user.name+' ?')){
-				$http.put('/activateUser', {'id':user._id, 'limit': $scope.limit, 'pageNumber': $scope.currentPage}).success(function(data){
-					if(data.result == 'Success' && data.data.length>0){
-						$scope.getUsers 	 = data.data;
-						$scope.totalUser 	 = data.count;
-						$scope.callSuccessError('success', 'User has been activated successfully');
-					}else{
-						$scope.show_books_form  = false;
-						$scope.show_books = false;
-		      			$scope.callSuccessError('error', 'Unable to activate user.');
-					}
-				}).error(function (data, status){
-		          	var httpError = httpErrorService.httpErrorMessage(data, status);
-		         	$scope.callSuccessError('error', httpError);
-				});
-			}
-		}
-        // Deactivate user.
-		$scope.deactivateuser = function(user){
-			if(window.confirm('Are you sure you want to deactivate user '+user.name+' ?')){
-				$http.put('/deactivateUser', {'id':user._id, 'limit' : $scope.limit, 'pageNumber': $scope.currentPage}).success(function(data){
-					if(data.result == 'Success' && data.data.length>0){
-						$scope.getUsers 	 = data.data;
-						$scope.totalUser 	 = data.count;
-						$scope.callSuccessError('success', 'User has been deactivated successfully');
-					}else{
-						$scope.show_books_form  = false;
-						$scope.show_books = false;
-		      			$scope.callSuccessError('error', 'Unable to deactivate user.');
-					}
-				}).error(function (data, status){
-		          	var httpError = httpErrorService.httpErrorMessage(data, status);
-		         	$scope.callSuccessError('error', httpError);
-				});
-			}
-		}
 
 		$scope.pageChanged = function() {
            $scope.get_all_books($scope.limit, $scope.currentPage);

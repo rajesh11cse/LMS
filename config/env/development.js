@@ -1,13 +1,13 @@
 'use strict';
 
 module.exports = {
-  db: 'mongodb://localhost/ZCEA',
+  db: 'mongodb://localhost/LMS',
 	debug: 'true',
   mongoose: {
     debug: false
   },
   app: {
-    name: 'ZCEA-Admin'
+    name: 'LMS-Admin'
   },
   notification:{
     title:'New Article Published.',

@@ -82,7 +82,7 @@ module.exports.issue_book = function(req, res){
           },
           function(usr, updateUser, updateBook, callback){
             var libraryTransaction = new LibraryTransactions();
-            libraryTransaction.usr = req.body.user_id,
+            libraryTransaction.usrs = req.body.user_id,
             libraryTransaction.books = books._id,
             libraryTransaction.dueDate = req.body.dueDate,
             libraryTransaction.transationType = 'issue'
@@ -181,7 +181,7 @@ module.exports.return_book = function(req, res){
           },
           function(usr, updateUser, updateBook, callback){
             var libraryTransaction = new LibraryTransactions();
-            libraryTransaction.usr = req.body.user_id,
+            libraryTransaction.usrs = req.body.user_id,
             libraryTransaction.books = books._id,
             libraryTransaction.dueDate = new Date,
             libraryTransaction.transationType = 'return'

@@ -47,17 +47,6 @@ angular.module('mean.system').controller('HeaderController', ['$window', '$scope
         $scope.getUsername=SessionService.getSession('username');
         $scope.getUsetype=SessionService.getSession('usertype');
       }    
-      if($location.url().substring(0,15) == '/userAdmin?from' || $location.url().substring(0,11) == '/userdetail'){
-         localStorage.setItem('currentMenu','userAdmin');
-      }else if($location.url() == '/getAppointments' || $location.url().substring(0,17) == '/recognizeUser?id'){
-         localStorage.setItem('currentMenu', 'appointmnet');
-      }else if($location.url() == '/patientRecord'){
-        localStorage.setItem('currentMenu','patientRecord');
-      }else if($location.url().substring(0,9) == '/articles'){
-        localStorage.setItem('currentMenu', 'articles');
-      }else{
-        localStorage.setItem('currentMenu', 'none');
-      }
       $scope.actMenu = localStorage.getItem('currentMenu');
     });
   }

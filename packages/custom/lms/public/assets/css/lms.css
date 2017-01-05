@@ -1,3 +1,127 @@
 .lms-example h1 {
   background-color: purple
 }
+
+
+  .btn-success, .btn-error, .btn, .glyphicon{
+    border-radius:1px;
+  }
+  
+
+
+/*<<<<<<<<<<<<<<< Buttons for submit, update, edit or cancel in show article and add article files >>>>>>>>>>>>>>>*/
+  .submitBtn, .editBtn, .resetBtn{
+    margin-left:5px;
+    border-radius:1px;
+  }
+
+.custom-container-fluid{
+  font-family: Candara,Calibri,Segoe,Segoe UI,Optima,Arial,sans-serif;
+}
+.custom-row-well{
+  background-color:#fff; 
+  border-left:1px solid #C2C2C2; 
+  border-right:1px solid #C2C2C2; 
+  border-bottom:1px solid #C2C2C2; 
+  border-top:1px solid #C2C2C2; 
+  border-radius:0px; 
+  
+
+    -moz-box-shadow: 0px 0px 9px #9e9c9e;
+    -webkit-box-shadow: 0px 0px 9px #9e9c9e;
+    box-shadow: 0px 0px 9px #9e9c9e;
+
+
+  /*background-color:#FAFAFA; 
+  border-color: #E0DEDE;
+  border-radius:1px;*/
+}
+
+.appointment-example h1 {
+  background-color: purple
+}
+
+.patient-registration-form, .patient-tratement-list{
+  border-radius: 8px; 
+  border: 1px solid #000; 
+  border-color: #E0DEDE; 
+  padding: 4px; 
+  font-size:12px; 
+  font-family: Cambria,Georgia,serif; 
+  background-color:#FAFAFA
+}
+
+.table-and-pagination{
+  font-size:12px; 
+  font-family: Cambria,Georgia,serif;
+}
+.total-user{
+  padding-top:50px; padding-right:5px; color: #023A4D; font-size: 120%;
+}
+/*Table Css for Get Appointment, Recognized patient list and User Admin*/
+/*----------------------------------------------------------------------*/
+.zceaTable { padding:0; margin:0; border-collapse:collapse; background:#fff;}
+.zceaTable thead th { background:#1E90FF; padding:10px 10px; color:#fff; text-align:left; font-weight:bold; border-left:1px solid #D4D4D4; border-right:1px solid #D4D4D4; border-top:1px solid #D4D4D4; border-bottom:1px solid #D4D4D4; text-transform:capitalize;}
+.zceaTable tbody,
+.zceaTable thead { border-left:1px solid #EAECEE; border-right:1px solid #EAECEE;}
+.zceaTable tbody td,
+.zceaTable tbody th { padding:10px; border-left:1px solid #D4D4D4; border-right:1px solid #D4D4D4; border-top:1px solid #D4D4D4; border-bottom:1px solid #D4D4D4;}
+.zceaTable tbody tr:hover{background:#fff}
+
+.BackCss{
+	color: red;
+}
+.BackGroundColorChange{
+	background:#E4F28A;
+}
+
+/*Button Css for for Whole Admin*/
+/*-------------------------------------------------------------------------*/
+.btn{
+	font-weight: bold;
+}
+
+ .myButton, .dropbtn {
+      background-color: #0D76DB;
+      color: white;
+      padding: 5px;
+      font-size: 14px;
+      border: none;
+      cursor: pointer;
+  }
+
+  .myButton:hover, .dropbtn:hover, .dropbtn:focus {
+    text-decoration: none;
+    color: white;
+    background-color: #095FB3;
+  }
+   .dropbtn option{
+      background-color: white;
+      color:black;
+      border-top: 1px solid #EFF0F1;
+  }
+
+.alert-box {
+  color:#555;
+  border-radius:8px;
+  font-family:Tahoma,Geneva,Arial,sans-serif;font-size:11px;
+  padding:10px 36px;
+  margin:10px;
+  font-weight:bold;
+  text-transform:uppercase;
+  }
+.alert-box span {
+  font-weight:normal;
+  text-transform:none;
+}
+.fadeout{
+  -webkit-transition: opacity 10s;
+  transition: opacity 10s;
+  opacity: 0;
+}
+
+.published-article, .selected-treatment{
+  margin-left:3px; 
+  color:green; 
+  font-weight:bold
+}

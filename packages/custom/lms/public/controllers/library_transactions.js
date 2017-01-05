@@ -11,6 +11,12 @@ angular.module('mean.system').controller('library_tranctions_Ctrl',['SessionServ
 	      toaster.pop({type: type, title: title});// Dispay a flash on brower along with title(message).
 	    };
 
+	    // Show details in pop-up functions
+	    $scope.get_transaction_detail = function(data){
+	     $scope.transaction_data = data;
+	     console.log($scope.transaction_data.usrs.name);
+	    };
+
 
 		 // Show the the list of transactions.
 		$scope.get_library_transactions = function(limit, pageNumber){

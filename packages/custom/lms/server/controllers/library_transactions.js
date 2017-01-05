@@ -13,8 +13,6 @@ var mongoose = require('mongoose'),
  */
 
  exports.get_library_transactions = function(req, res){
-  console.log(req.body.pageNumber);
-  console.log(req.body.limit);
    LibraryTransactions.find({}).populate('books').populate('usrs').skip(req.body.pageNumber > 0 ? ((req.body.pageNumber-1)*req.body.limit): 0).limit(req.body.limit).sort({'createdAt':-1}).exec(function(err,transactions){
     if(err){
       res.status(400).json({'result':'Error','data':err})

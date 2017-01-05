@@ -12,128 +12,84 @@
 	      <div data-ng-include="'/articles/views/spinner.html'" ></div> 
 	    </spinner> 
 		<div  class="row well custom-row-well"> 
-		<style type="text/css">
-		.panel-primary:hover{
-			    outline: none;
-			    border-color: #4E4E52;
-			    box-shadow: 0 0 5px #4E4E52;
-			  }
-		</style>
-			<div class="col-md-6">
-				<div class="panel panel-primary"style="color:#8C8B8B; font-style:italic;">
-				    <div class="panel-heading">
-				    	<p class="panel-title">
-				    		<a href="#!/lms/manage_books">Manage Library Books</a> 
-					    	<span class="pull-right">
-								Total : <span ng-bind="Total_Users"></span>
-							</span>
-						</p>
-				    </div>
-				    <div class="panel-body" style="background-color:#F7F8FA">
-				        <div class="col-md-2">
-							<a href="#!/lms/manage_books"><img ng-src="system/assets/img/manageSuperadmin.png" width="90" alt="image not found"></a>
-						</div>
-						<div class="col-md-10" style="">
-							<div class="col-md-5">
-								<span><strong>Customer users : </strong><span ng-bind="Total_Customer_Users"></span></span><br>
-								<span><strong>Editor users : </strong><span ng-bind="Total_Editor_Users"></span></span>
-							</div> 
-							<div class="col-md-7">
-								<span><strong>Activated : </strong><span style="color:green;" ng-bind="Total_Customer_Active_Users"></span>,&nbsp;
-								<strong>Deativated : </strong><span style="color:red;" ng-bind="Total_Customer_Deactive_Users"></span></span><br>
-								<span><strong>Activated : </strong><span style="color:green;" ng-bind="Total_Editor_Active_Users"></span>,&nbsp;
-								<strong>Deativated : </strong><span style="color:red;" ng-bind="Total_Editor_Deactive_Users"></span></span>
-							</div>
-						</div>
-				    </div>
-				</div>
-			</div>
+			<style type="text/css">
+			.panel-primary:hover{
+				    outline: none;
+				    border-color: #4E4E52;
+				    box-shadow: 0 0 5px #4E4E52;
+				  }
+			</style>
 			<div class="col-md-6">
 				<div class="panel panel-primary"style="color:#8C8B8B; font-style:italic;">
 				    <div class="panel-heading">
 				    	<p class="panel-title">
 				    		<a href="#!/lms/manage_users">Manage Users</a> 
-					    	<span class="pull-right">
-								Total : <span ng-bind="Total_Users"></span>
-							</span>
 						</p>
 				    </div>
 				    <div class="panel-body" style="background-color:#F7F8FA">
 				        <div class="col-md-2">
-							<a href="#!/lms/manage_users"><img ng-src="system/assets/img/manageSuperadmin.png" width="90" alt="image not found"></a>
+							<a href="#!/lms/manage_users"><img ng-src="system/assets/img/lms.png" width="90" alt="image not found"></a>
 						</div>
 						<div class="col-md-10" style="">
+							Manage Users
+				    	</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="panel panel-primary"style="color:#8C8B8B; font-style:italic;">
+				    <div class="panel-heading">
+				    	<p class="panel-title">
+				    		<a href="#!/lms/manage_books">Manage Library Books</a> 
+						</p>
+				    </div>
+				    <div class="panel-body" style="background-color:#F7F8FA">
+				        <div class="col-md-2">
+							<a href="#!/lms/manage_books"><img ng-src="system/assets/img/lms.png" width="90" alt="image not found"></a>
 						</div>
+						<div class="col-md-10" style="">
+							Manage Library Books
+				        </div>
 				    </div>
 				</div>
 			</div>
+
 
 			<div class="col-md-6">
 				<div class="panel panel-primary"style="color:#8C8B8B; font-style:italic;">
 				    <div class="panel-heading">
 				    	<p class="panel-title">
 				    		<a href="#!/lms/issue_return_books">Issue/Return Library Books</a> 
-					    	<span class="pull-right">
-								Total : <span ng-bind="Total_Users"></span>
-							</span>
 						</p>
 				    </div>
 				    <div class="panel-body" style="background-color:#F7F8FA">
 				        <div class="col-md-2">
-							<a href="#!/lms/issue_return_books"><img ng-src="system/assets/img/manageSuperadmin.png" width="90" alt="image not found"></a>
+							<a href="#!/lms/issue_return_books"><img ng-src="system/assets/img/lms.png" width="90" alt="image not found"></a>
 						</div>
-						<div class="col-md-10" style="">
-						</div>
+						<div class="col-md-10">
+							Issue/Return Library Books
+					    </div>
 				    </div>
 				</div>
 			</div>
 
-			<div class="col-md-6" ng-if="userType == 'superadmin' || userType == 'customer'">
+			<div class="col-md-6" >
 				<div class="panel panel-primary"style="color:#8C8B8B; font-style:italic;">
 				    <div class="panel-heading">
 				    	<p class="panel-title">
 				    	<a href="#!/lms/library_transactions">Manage Library Transactions</a> 
-					    	<span class="pull-right">
-								Total : <span ng-bind="Total_Appointment_Requests"></span>
-							</span>
 						</p>
 				    </div>
 				    <div class="panel-body" style="background-color:#F7F8FA;">
 				        <div class="col-md-2">
-							<a href="#!/lms/library_transactions"><img ng-src="system/assets/img/appointment.png" width="90" alt="image not found"></a>
+							<a href="#!/lms/library_transactions"><img ng-src="system/assets/img/lms.png" width="90" alt="image not found"></a>
 						</div>
 						<div class="col-md-10">
-							<div class="col-md-12">
-								<span><strong>Today's Library Transactions : </strong><span ng-bind="Todays_Appointment_Requests"></span></span><br>
-								<span><strong>Date : </strong><span ng-bind="todaysDate | date : 'MMM d, y'"></span></span>
-							</div> 
+							Manage Library Transactions
 						</div>
 				    </div>  
 				</div>
 			</div>
-			<!-- <div class="col-md-6" ng-if="userType == 'superadmin' || userType == 'editor'">
-				<div class="panel panel-primary"style="color:#8C8B8B; font-style:italic;">
-				    <div class="panel-heading">
-				    	<p class="panel-title">
-				    	<a href="#!/articles">Manage Articles</a> 
-				    	<span class="pull-right">
-							Total : <span ng-bind="Total_Articles"></span>
-						</span>
-						</p>
-				    </div>
-				    <div class="panel-body" style="background-color:#F7F8FA;">
-				        <div class="col-md-2">
-							<a href="#!/articles"><img ng-src="system/assets/img/articles.png" width="90" alt="image not found"></a>
-						</div>
-						<div class="col-md-10">
-							<div class="col-md-12">
-								<span><strong>Published Aarticles : </strong><span ng-bind="Published_Articles"></span></span><br>
-								<span><strong>Date : </strong><span ng-bind="todaysDate | date : 'MMM d, y'"></span></span>
-							</div> 
-						</div>
-				    </div>
-				</div>
-			</div> -->
 		</div>
 	</section>
 </div>

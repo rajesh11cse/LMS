@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('mean.articles').factory("httpErrorService", function($rootScope, $http) {
+angular.module('mean.system').factory("httpErrorService", function($rootScope, $http) {
 
     // http error handling service
     var httpErrorMessage =  function(data, status) {

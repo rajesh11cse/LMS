@@ -33,11 +33,80 @@
 							<span ng-show="data.transationType == 'return' " style="color:red;">Returned</span>
 		                </td>
 		                <td>
-		                	<button type="button" class="btn btn-info btn-xs"  ng-click="remove_book(data)"  title="Show transactions details" >Show Detail</button>
+		                	<button type="button" class="btn btn-info btn-xs"  ng-click="get_transaction_detail(data)"  title="Show transactions details" data-toggle="modal" data-target="#myModal1">Show Detail</button>
 		                </td>
 					</tr>
 			    </tbody>
 		   </table>
 		</div>
+
+		<div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog modal-md" role="document">
+                <div class="modal-body">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <h3 class="panel-title"><span ng-bind = "transaction_data.usrs.name"></span><span class="pull-right" ng-bind = "transaction_data.transationId"></span></h3>
+                        </div>
+                        <div class="panel-body" style = "color: #666666;">
+                            <label>Transaction details of the user <a href=""ng-bind="transaction_data.usrs.name"></a></label> 
+                            <div class="well col-md-12">
+                                <b class=" col-md-12"><i>Transation details.</i></b>
+                                <div class="thumbnail col-md-12">
+                                    <span class = "col-md-5"><strong>Transation Id</strong></span>
+                                    <span class = "col-md-1"><strong>:</strong></span>
+                                    <span class = "col-md-5"><b><span ng-bind = "transaction_data.transationId"></span></b></span>
+
+                                    <span class = "col-md-5"><strong>Transation Type</strong></span>
+                                    <span class = "col-md-1"><strong>:</strong></span>
+                                    <span class = "col-md-5"><b><span ng-bind = "transaction_data.transationType"></span></b></span>
+
+                                    <span class = "col-md-5"><strong>Due Date</strong></span>
+                                    <span class = "col-md-1"><strong>:</strong></span>
+                                    <span class = "col-md-5"><b><span style="background-color:yellow; color:red;" ng-bind = "transaction_data.dueDate| date : 'MMM d, y'""></span>
+                                    </b></span>
+                                </div>
+
+                                <b class=" col-md-12"><i>User details.</i></b>
+                                <div class="thumbnail col-md-12">
+                                    <span class = "col-md-5"><strong>User Id</strong></span>
+                                    <span class = "col-md-1"><strong>:</strong></span>
+                                    <span class = "col-md-5"><b><span ng-bind = "transaction_data.usrs.usrId"></span></b></span>
+
+                                    <span class = "col-md-5"><strong>User Name</strong></span>
+                                    <span class = "col-md-1"><strong>:</strong></span>
+                                    <span class = "col-md-5"><b><span ng-bind = "transaction_data.usrs.usrName""></span>
+                                    </b></span>
+
+                                    <span class = "col-md-5"><strong>Name</strong></span>
+                                    <span class = "col-md-1"><strong>:</strong></span>
+                                    <span class = "col-md-5"><b><span ng-bind = "transaction_data.usrs.name""></span>
+                                    </b></span>
+                                </div>
+
+                                <b class=" col-md-12"><i>Book details.</i></b>
+                                <div class="thumbnail col-md-12">
+                                    <span class = "col-md-5"><strong>Book Id</strong></span>
+                                    <span class = "col-md-1"><strong>:</strong></span>
+                                    <span class = "col-md-5"><b><span ng-bind = "transaction_data.books.bookId"></span></b></span>
+
+                                    <span class = "col-md-5"><strong>Book Name</strong></span>
+                                    <span class = "col-md-1"><strong>:</strong></span>
+                                    <span class = "col-md-5"><b><span ng-bind = "transaction_data.books.bookName""></span>
+                                    </b></span>
+
+                                    <span class = "col-md-5"><strong>Author Name</strong></span>
+                                    <span class = "col-md-1"><strong>:</strong></span>
+                                    <span class = "col-md-5"><b><span ng-bind = "transaction_data.books.authorName""></span>
+                                    </b></span>
+                                </div>
+                            </div>
+                            <button type="button" class="btn btn-danger btn-xs pull-right" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
     </section>
 </div>
+
+        

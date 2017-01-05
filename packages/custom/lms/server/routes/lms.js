@@ -53,6 +53,9 @@
     app.route('/api/lms/issue_book')
       .post(issue_return_books.issue_book);
 
+    // API for return books
+    app.route('/api/lms/return_book')
+      .post(issue_return_books.return_book);
     app.get('/api/lms/example/render', function (req, res, next) {
       Lms.render('index', {
         package: 'lms'

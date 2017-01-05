@@ -51,7 +51,8 @@
 			    <thead style="border:2px solid #1E90FF;">
 				    <tr>
 				        <th scope="col">Sl. No.</th>
-		                <th scope="col">Users Name</th>
+		                <th scope="col">User Id</th>
+		                <th scope="col">User Name</th>
 		                <th scope="col">Name</th>
 		                <th scope="col">Email Address</th>
 		                <th scope="col">Mobile Number</th>
@@ -61,6 +62,7 @@
 			    <tbody>
 			      	<tr scope="row" ng-repeat = "data in get_users">
 						<td ng-bind="$index+1+indexIncrement"></td>
+						<td ng-bind="data.usrId"></td>
 						<td ng-bind="data.usrName"></td>
 						<td ng-bind="data.name"></td>
 						<td ng-bind="data.email"></td>

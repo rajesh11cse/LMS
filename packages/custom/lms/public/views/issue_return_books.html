@@ -55,18 +55,17 @@
                 <div class="col-md-12">
                     <div><b>You have issued 4 books&nbsp;&nbsp;<a href="">details</a></b></div>
                     <br>
-                    <button ng-show="!show_retun_book_form" title="Retun books"" class="btn btn-block btn-warning btn-sm " ng-click="show_retun_book_form = true;">Return books</button>
-                    <form ng-show="show_retun_book_form" name="rerun_book_form" class="col-md-12 article-form">
+                    <button ng-show="!show_return_book_form" title="Retun books"" class="btn btn-block btn-warning btn-sm " ng-click="show_return_book_form = true;">Return books</button>
+                    <form ng-show="show_return_book_form" name="rerun_book_form" class="col-md-12 article-form">
                         <div class="col-md-12">
                             <b class="pull-right" style="color:green;"><i>Return a book here !</i></b>
                         </div>
                          <div class="form-group">
                             <label class="required" for="b_name"><em>*</em>Book Name/Book Id :</label>
-                             <input type="text" name="return_book"  placeholder="Book Name/Book Id" ng-model = "return_book" class="form-control input-sm" required>
-                             <span style="color:red;">Invalid  Book Name or Book id</span>
+                             <input type="text" name="return_book_info"  placeholder="Book Name/Book Id" ng-model = "return_book_info" class="form-control input-sm" required>
                         </div>
-                        <button type="submit" class="btn btn-sm btn-raised btn-success submitBtn pull-right"  ng-click="add_books(books)" ng-disabled="rerun_book_form.$invalid"> Submit</button>
-                        <button type="submit" href="" class="btn btn-sm btn-raised btn-danger resetBtn pull-right" ng-click="show_retun_book_form = false;">Cancel</button>
+                        <button type="submit" class="btn btn-sm btn-raised btn-success submitBtn pull-right"  ng-click="return_books(return_book_info)" ng-disabled="rerun_book_form.$invalid"> Submit</button>
+                        <button type="submit" href="" class="btn btn-sm btn-raised btn-danger resetBtn pull-right" ng-click="show_return_book_form = false;">Cancel</button>
                         <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     </form>

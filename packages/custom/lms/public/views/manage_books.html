@@ -10,7 +10,7 @@
 	      <div data-ng-include="'/articles/views/spinner.html'" ></div> 
 	    </spinner> 
 		<div ng-show="show_books_form" class="row well custom-row-well"> 
-			<div class="col-md-12 books-form">
+			<form name="books_form" class="col-md-12 books-form">
 		        <h3 class="main_title"><strong>Books Add Form</strong></h3>
 		        <p class="required">* <span>Required Fields  </span> </p>
 		        <label>Add a book here !</label>
@@ -27,25 +27,13 @@
 
                 <div class="form-group">
                     <label class="required" for="qty"><em>*</em>Quantity :</label>
-                    <select class="form-control input-sm" name="qty" ng-model="books.qty" required>
-	                      <option value="">---Select Quantity--- </option>
-	                      <option value="1">1</option>
-	                      <option value="2">2</option>
-	                      <option value="3">3</option>
-	                      <option value="4">4</option>
-	                      <option value="5">5</option>
-	                      <option value="5">6</option>
-	                      <option value="5">7</option>
-	                      <option value="5">8</option>
-	                      <option value="5">9</option>
-	                      <option value="5">10</option>
-                    </select>
+                    <input type="number" name="a_name"  placeholder="Books Quantity" ng-model = "books.qty" min-length="0" min="0" class="form-control input-sm" required>
                 </div>	
-                <button type="submit" class="btn btn-sm btn-raised btn-success submitBtn pull-right" id="btn-register" ng-click="add_books(books)"><i class="glyphicon glyphicon-edit"></i> Submit</button>
+                <button type="submit" ng-disabled="books_form.$invalid" class="btn btn-sm btn-raised btn-success submitBtn pull-right" id="btn-register" ng-click="add_books(books)"><i class="glyphicon glyphicon-edit"></i> Submit</button>
 	            <button type="submit" href="" class="btn btn-sm btn-raised btn-danger resetBtn pull-right" ng-click="books = undefined;" id="btn-register"><i class="glyphicon glyphicon-repeat"></i> Reset</button>
 	            <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 	            <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			</div>
+			</form>
 		</div>
 		<div ng-show="show_books" class="row well custom-row-well"> 
 			<uib-pagination total-items="total_books" ng-model="currentPage" items-per-page="limit" max-size="maxSize" class="pagination-sm" boundary-links="true" rotate="false" ng-click = "pageChanged()"></uib-pagination>
@@ -56,6 +44,7 @@
 			    <thead style="border:2px solid #1E90FF;">
 				    <tr>
 				        <th scope="col">Sl. No.</th>
+				        <th scope="col">Book Id</th>
 		                <th scope="col">Books Name</th>
 		                <th scope="col">Author Name</th>
 		                <th scope="col">Quantity</th>
@@ -66,13 +55,13 @@
 			    <tbody>
 			      	<tr scope="row" ng-repeat = "data in get_books">
 						<td ng-bind="$index+1+indexIncrement"></td>
+						<td ng-bind="data.bookId"></td>
 						<td ng-bind="data.bookName"></td>
 						<td ng-bind="data.authorName"></td>
 						<td ng-bind="data.quantity"></td>
 						<td>
-							<span ng-bind="data.availabilityStatus"></span>
-		                    <button type="button" ng-show="data.isActive == false" class="btn btn-success btn-xs" ng-click="activateuser(data)">Activate</button>
-		                    <button type="button" ng-show="data.isActive == true" class="btn btn-danger btn-xs" ng-click="deactivateuser(data)">Deactivate</button>
+							<span ng-show="data.availabilityStatus" style="color:green;">Available</span>
+							<span ng-show="!data.availabilityStatus" style="color:red;">Not Available</span>
 		                </td>
 		                <td>
 		                	<button type="button" class="btn btn-danger btn-xs"  ng-click="remove_book(data)"  title="Delete book" ><i class="glyphicon glyphicon-trash"></i> Remove</button>

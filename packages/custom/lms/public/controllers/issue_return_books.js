@@ -96,11 +96,7 @@ angular.module('mean.system').controller('issue_return_books_Ctrl',['SessionServ
 				'book_detail'   :  book_info, 
 				'dueDate'		:  $scope.dueDate,
 			}
-
-			console.log(params)
-
 			$http.post('/api/lms/issue_book', params).success(function(data){
-				console.log(data.result);
 				if(data.result == 'Success'){
 					$scope.show_issue_book_form = false;
 					$scope.callSuccessError('success', 'Book has been issued successfully');
@@ -112,7 +108,24 @@ angular.module('mean.system').controller('issue_return_books_Ctrl',['SessionServ
 	         	$scope.callSuccessError('error', httpError);
 			});
 		}
-
+		// Return a book.
+		$scope.return_books = function(book_info){
+			var params = {
+				'user_id'		:  $scope.selected_user._id, 
+				'book_detail'   :  book_info, 
+			}
+			$http.post('/api/lms/return_book', params).success(function(data){
+				if(data.result == 'Success'){
+					$scope.show_return_book_form = false;
+					$scope.callSuccessError('success', 'Book has been returned successfully');
+				}else{
+	      			$scope.callSuccessError('error', 'Not able to return the book.');
+				}
+			}).error(function (data, status){
+	          	var httpError = httpErrorService.httpErrorMessage(data, status);
+	         	$scope.callSuccessError('error', httpError);
+			});
+		}
 
 
 		$scope.pageChanged = function() {

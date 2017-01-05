@@ -31,8 +31,44 @@ module.exports.issue_book = function(req, res){
         // if first argumant is 'true' it indicates an error If an error occurred, it will be returned by the first err argument
         // else success for 'null' or 'false'
         // More more detail : https://caolan.github.io/async/docs.html#parallel
-        async.parallel([
+        async.waterfall([
           function(callback){
+            Usrs.find({ _id: req.body.user_id}, function(err, usr){
+              if(err) {
+                // Error handling
+                callback(true, err);
+              }else{
+                //check book already issued
+                async.eachSeries(usr[0].myBooks, function(data, cb){
+                  if(data.BookId  === books.bookId){
+                    return res.status(400).jsonp({result:"Error", message:'Book already issued by this user.'});
+                    callback(true, err);
+                  }
+                  cb();
+                }, function (err) {   
+                  if (err){
+                    // Error handling
+                    callback(true, err);
+                  }else{
+                    // success callback
+                    callback(false, usr);
+                  }
+                });
+              }
+            });
+          },
+
+          function(usr, callback){
+            Usrs.findByIdAndUpdate(req.body.user_id, {$push:{myBooks: {BookId : books.bookId, BookName : books.bookName}}}, function(err, updateUser){
+              if(err) {
+                // Error handling
+                callback(true, err);
+              }else{
+                callback(false, usr, updateUser);
+              }
+            });
+          },
+          function(usr, updateUser, callback){
             var query = {$set:{quantity : books.quantity-1, availabilityStatus : books.quantity == 1 ? false:true}}
             Books.findByIdAndUpdate(books._id, query, function(err, updateBook){
               if(err) {
@@ -40,21 +76,11 @@ module.exports.issue_book = function(req, res){
                 callback(true, err);
               }else{
                 // callback on success
-                callback(false, updateBook);
+                callback(false, usr, updateUser, updateBook);
               }
             });
           },
-          function(callback){
-            Usrs.findByIdAndUpdate(req.body.user_id, {$push:{myBooks: {BookId : books.bookId, BookName : books.bookName}}}, function(err, updateUser){
-              if(err) {
-                // Error handling
-                callback(true, err);
-              }else{
-                callback(false, updateUser);
-              }
-            });
-          },
-          function(callback){
+          function(usr, updateUser, updateBook, callback){
             var libraryTransaction = new LibraryTransactions();
             libraryTransaction.usr = req.body.user_id,
             libraryTransaction.books = books._id,
@@ -103,34 +129,61 @@ module.exports.return_book = function(req, res){
         // if first argumant is 'true' it indicates an error If an error occurred, it will be returned by the first err argument
         // else success for 'null' or 'false'
         // More more detail : https://caolan.github.io/async/docs.html#parallel
-        async.parallel([
+        async.waterfall([
           function(callback){
-            var query = {$set:{quantity : books.quantity+1, availabilityStatus : true}}
+            Usrs.find({ _id: req.body.user_id}, function(err, usr){
+              if(err) {
+                // Error handling
+                callback(true, err);
+              }else{
+                 var checkBook = false;
+                //check book already issued
+                async.eachSeries(usr[0].myBooks, function(data, cb){
+                  if(data.BookId === books.bookId){
+                    var checkBook = true;
+                    callback(false, usr);
+                  }else{
+                    cb();
+                  }
+                }, function (err) {   
+                  if (err){
+                    // Error handling
+                    callback(true, err);
+                  }else{
+                    return res.status(400).jsonp({result:"Error", message:'Book already returned or not issued by this user.'});
+                  }
+                });
+              }
+            });
+          },
+
+          function(usr, callback){
+            Usrs.findByIdAndUpdate(req.body.user_id, {$pull:{myBooks: {BookId : books.bookId, BookName : books.bookName}}}, function(err, updateUser){
+              if(err) {
+                // Error handling
+                callback(true, err);
+              }else{
+                callback(false, usr, updateUser);
+              }
+            });
+          },
+          function(usr, updateUser, callback){
+            var query = {$set:{quantity : books.quantity+1, availabilityStatus:true}}
             Books.findByIdAndUpdate(books._id, query, function(err, updateBook){
               if(err) {
                 // Error handling
                 callback(true, err);
               }else{
                 // callback on success
-                callback(false, updateBook);
+                callback(false, usr, updateUser, updateBook);
               }
             });
           },
-          function(callback){
-            Usrs.findByIdAndUpdate(req.body.user_id, {$pop:{myBooks: {BookId : books.bookId}}}, function(err, updateUser){
-              if(err) {
-                // Error handling
-                callback(true, err);
-              }else{
-                callback(false, updateUser);
-              }
-            });
-          },
-          function(callback){
+          function(usr, updateUser, updateBook, callback){
             var libraryTransaction = new LibraryTransactions();
             libraryTransaction.usr = req.body.user_id,
             libraryTransaction.books = books._id,
-            libraryTransaction.dueDate = new Date(),
+            libraryTransaction.dueDate = new Date,
             libraryTransaction.transationType = 'return'
             libraryTransaction.save(function(err, libTransation){
               if(err) {
@@ -152,6 +205,25 @@ module.exports.return_book = function(req, res){
             res.status(200).json({result:"Success"});
           }
         });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
       }
     }
   });

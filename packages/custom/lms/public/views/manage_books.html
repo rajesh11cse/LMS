@@ -27,7 +27,7 @@
 
                 <div class="form-group">
                     <label class="required" for="qty"><em>*</em>Quantity :</label>
-                    <input type="number" name="a_name"  placeholder="Books Quantity" ng-model = "books.qty" min-length="0" min="0" class="form-control input-sm" required>
+                    <input type="number" name="a_name"  placeholder="Books Quantity" ng-model = "books.qty" min-length="1" min="1" class="form-control input-sm" required>
                 </div>	
                 <button type="submit" ng-disabled="books_form.$invalid" class="btn btn-sm btn-raised btn-success submitBtn pull-right" id="btn-register" ng-click="add_books(books)"><i class="glyphicon glyphicon-edit"></i> Submit</button>
 	            <button type="submit" href="" class="btn btn-sm btn-raised btn-danger resetBtn pull-right" ng-click="books = undefined;" id="btn-register"><i class="glyphicon glyphicon-repeat"></i> Reset</button>

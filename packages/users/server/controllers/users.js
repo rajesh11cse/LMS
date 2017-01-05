@@ -21,8 +21,8 @@ User.count(function (err, count) {
 
 var createSuperadmin = function(){
     var user = new User({
-               "phoneNumber" : "3333333333",
-               "email" : "superadmin@zcea.com",
+               "phoneNumber" : "8888888888",
+               "email" : "superadmin@lms.com",
                "password" : "superadmin", 
                "title" : "Mr.", 
                "name" : "Super Admin",

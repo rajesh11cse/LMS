@@ -8,6 +8,7 @@
     var manage_books = require('../controllers/manage_books');
     var manage_usrs = require('../controllers/manage_users');
     var issue_return_books = require('../controllers/issue_return_books');
+    var library_transactions = require('../controllers/library_transactions')
 
     app.get('/api/lms/example/anyone', function (req, res, next) {
       res.send('Anyone can access this');
@@ -56,6 +57,11 @@
     // API for return books
     app.route('/api/lms/return_book')
       .post(issue_return_books.return_book);
+
+    // API for get_library_transactions
+    app.route('/api/lms/get_library_transactions')
+      .post(library_transactions.get_library_transactions);
+
     app.get('/api/lms/example/render', function (req, res, next) {
       Lms.render('index', {
         package: 'lms'

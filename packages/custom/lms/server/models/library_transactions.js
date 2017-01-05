@@ -21,7 +21,7 @@ var LibraryTransactionSchema = new Schema({
     required:true,
   },
 
-  usr: {
+  usrs: {
     type: Schema.Types.ObjectId,
     ref: 'Usrs'
   },

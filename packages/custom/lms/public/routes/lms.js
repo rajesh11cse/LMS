@@ -20,6 +20,9 @@
     }).state('issue return books',{
       url:'/lms/issue_return_books',
       templateUrl:'lms/views/issue_return_books.html',
+    }).state('library transactions',{
+      url:'/lms/library_transactions',
+      templateUrl:'lms/views/library_transactions.html',
     });
   }
 

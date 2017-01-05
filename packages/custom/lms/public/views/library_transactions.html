@@ -1,0 +1,43 @@
+<div data-ng-controller="library_tranctions_Ctrl">
+   <section class="container-fluid  custom-container-fluid">
+	    <div class="row well custom-row-well">
+	      <b class=""> <a class="text-primary" href="#!/superadminlogin">Dashboard</a> / Library Transactions</b>
+	    </div>
+	    <spinner name="userSpinner" on-loaded="get_library_transactions(limit, currentPage)">
+	      <div data-ng-include="'/articles/views/spinner.html'" ></div> 
+	    </spinner> 
+		<div ng-show="show_transactions" class="row well custom-row-well"> 
+			<uib-pagination total-items="total_trancations" ng-model="currentPage" items-per-page="limit" max-size="maxSize" class="pagination-sm" boundary-links="true" rotate="false" ng-click = "pageChanged()"></uib-pagination>
+			<p class = "pull-right" style = "padding-top:50px; padding-right:5px; color: #023A4D; font-size: 120%;">
+		       Total Books: {{total_trancations}}
+		    </p> 
+			<table class="zceaTable" summary="Sample Table" style="width:100%;">
+			    <thead style="border:2px solid #1E90FF;">
+				    <tr>
+				        <th scope="col">Sl. No.</th>
+				        <th scope="col">Transaction Id</th>
+				        <th scope="col">Name</th>
+		                <th scope="col">Book Name</th>
+		                <th scope="col">Transaction Type</th>
+		                <th scope="col">Action</th>
+				     </tr>
+				</thead>
+			    <tbody>
+			      	<tr scope="row" ng-repeat = "data in get_transactions">
+						<td ng-bind="$index+1+indexIncrement"></td>
+						<td ng-bind="data.transationId"></td>
+						<td ng-bind="data.usrs.name"></td>
+						<td ng-bind="data.books.bookName"></td>
+						<td>
+							<span ng-show="data.transationType == 'issue'" style="color:green;">Issued</span>
+							<span ng-show="data.transationType == 'return' " style="color:red;">Returned</span>
+		                </td>
+		                <td>
+		                	<button type="button" class="btn btn-info btn-xs"  ng-click="remove_book(data)"  title="Show transactions details" >Show Detail</button>
+		                </td>
+					</tr>
+			    </tbody>
+		   </table>
+		</div>
+    </section>
+</div>
